@@ -1,9 +1,8 @@
 <!DOCTYPE html>
 <html lang="pt">
-
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Tech & Culture Runner - Feira de Exposições</title>
     <style>
         * {
@@ -11,8 +10,10 @@
             padding: 0;
             box-sizing: border-box;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            user-select: none;
+            -webkit-user-select: none;
         }
-        
+
         body {
             background: #090d16;
             color: #f8fafc;
@@ -22,8 +23,9 @@
             justify-content: center;
             min-height: 100vh;
             overflow: hidden;
+            touch-action: manipulation;
         }
-        
+
         .game-container {
             width: 800px;
             max-width: 100%;
@@ -34,7 +36,7 @@
             border: 2px solid #00f0ff;
             position: relative;
         }
-        
+
         .header {
             display: flex;
             justify-content: space-between;
@@ -43,25 +45,25 @@
             background: #0b0f19;
             border-bottom: 2px solid #1f2937;
         }
-        
+
         .stats {
             display: flex;
             gap: 20px;
             font-size: 1.1rem;
             font-weight: bold;
         }
-        
+
         .stat-item span {
             color: #00f0ff;
         }
-        
+
         canvas {
             display: block;
             background: linear-gradient(to bottom, #070a14 0%, #0f172a 100%);
             width: 100%;
-            height: 320px;
+            height: 280px;
         }
-        
+
         .overlay {
             position: absolute;
             top: 0;
@@ -77,21 +79,21 @@
             padding: 20px;
             z-index: 10;
         }
-        
+
         .overlay h1 {
-            font-size: 2.4rem;
+            font-size: 2.2rem;
             color: #00f0ff;
             margin-bottom: 10px;
             text-shadow: 0 0 10px rgba(0, 240, 255, 0.5);
         }
-        
+
         .overlay p {
-            font-size: 1.1rem;
+            font-size: 1rem;
             color: #cbd5e1;
             margin-bottom: 20px;
             max-width: 550px;
         }
-        
+
         .btn {
             background: #00f0ff;
             color: #090d16;
@@ -104,13 +106,51 @@
             transition: all 0.2s;
             box-shadow: 0 0 15px rgba(0, 240, 255, 0.4);
         }
-        
+
         .btn:hover {
             background: #70f8ff;
             transform: scale(1.05);
         }
+
+        /* Botão Gigante de Salto para Telemóvel / Tátil */
+        .mobile-controls {
+            display: none;
+            background: #0b0f19;
+            padding: 15px;
+            text-align: center;
+            border-top: 2px solid #1f2937;
+        }
+
+        .jump-btn-big {
+            width: 100%;
+            background: linear-gradient(135deg, #00f0ff, #0284c7);
+            color: #090d16;
+            border: none;
+            padding: 18px;
+            font-size: 1.4rem;
+            font-weight: bold;
+            border-radius: 10px;
+            cursor: pointer;
+            box-shadow: 0 5px 20px rgba(0, 240, 255, 0.4);
+            letter-spacing: 2px;
+        }
+
+        .jump-btn-big:active {
+            transform: scale(0.96);
+            background: #70f8ff;
+        }
+
+        /* Mostra os controlos mobile em ecrãs táteis / telemóveis */
+        @media (max-width: 768px), (pointer: coarse) {
+            .mobile-controls {
+                display: block;
+            }
+            canvas {
+                height: 240px;
+            }
+        }
+
         /* Modal do Quiz */
-        
         #quiz-modal {
             display: none;
             position: absolute;
@@ -123,20 +163,20 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            padding: 25px;
+            padding: 20px;
             text-align: center;
         }
-        
+
         .quiz-box {
             background: #1e293b;
-            padding: 25px;
+            padding: 20px;
             border-radius: 12px;
             border: 2px solid #00f0ff;
             max-width: 620px;
             width: 100%;
             box-shadow: 0 0 25px rgba(0, 240, 255, 0.3);
         }
-        
+
         .quiz-category {
             font-size: 0.8rem;
             color: #38bdf8;
@@ -145,39 +185,39 @@
             letter-spacing: 1px;
             margin-bottom: 5px;
         }
-        
+
         .quiz-box h3 {
             color: #ffffff;
             margin: 10px 0 15px 0;
-            font-size: 1.2rem;
+            font-size: 1.1rem;
         }
-        
+
         .quiz-options {
             display: grid;
             grid-template-columns: 1fr;
             gap: 10px;
             margin-top: 15px;
         }
-        
+
         .option-btn {
             background: #334155;
             color: #f8fafc;
             border: 1px solid #475569;
-            padding: 12px 18px;
+            padding: 12px 15px;
             border-radius: 8px;
             cursor: pointer;
             text-align: left;
-            font-size: 1rem;
+            font-size: 0.95rem;
             transition: all 0.2s;
         }
-        
-        .option-btn:hover {
+
+        .option-btn:hover, .option-btn:active {
             background: #00f0ff;
             color: #090d16;
             font-weight: bold;
         }
+
         /* Explicação ao Errar */
-        
         #explanation-modal {
             display: none;
             position: absolute;
@@ -190,86 +230,63 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            padding: 25px;
+            padding: 20px;
             text-align: center;
         }
-        
+
         .explanation-box {
             background: #1e293b;
-            padding: 25px;
+            padding: 20px;
             border-radius: 12px;
             border: 2px solid #ef4444;
             max-width: 550px;
             width: 100%;
         }
-        
+
         .explanation-box h3 {
             color: #ef4444;
             margin-bottom: 10px;
         }
-        
+
         .explanation-box p {
             color: #f8fafc;
             margin-bottom: 15px;
-            font-size: 1rem;
-            line-height: 1.5;
+            font-size: 0.95rem;
+            line-height: 1.4;
         }
-        
+
         #correct-answer-display {
             color: #38bdf8;
             font-weight: bold;
             margin-bottom: 15px;
-            font-size: 1.05rem;
+            font-size: 1rem;
         }
-        
+
         #feedback-banner {
             display: none;
             position: absolute;
-            top: 20px;
+            top: 15px;
             left: 50%;
             transform: translateX(-50%);
-            padding: 10px 25px;
+            padding: 8px 20px;
             border-radius: 30px;
             font-weight: bold;
-            font-size: 1.1rem;
+            font-size: 1rem;
             z-index: 30;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
         }
-        
-        .feedback-correct {
-            background: #10b981;
-            color: white;
-        }
-        
+        .feedback-correct { background: #10b981; color: white; }
+
         .controls-hint {
-            padding: 12px;
+            padding: 10px;
             background: #0b0f19;
             text-align: center;
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             color: #94a3b8;
             border-top: 1px solid #1f2937;
-            display: flex;
-            justify-content: space-around;
-            align-items: center;
-        }
-        
-        .mobile-jump-btn {
-            background: #00f0ff;
-            color: #090d16;
-            border: none;
-            padding: 10px 24px;
-            border-radius: 6px;
-            font-weight: bold;
-            display: none;
-            cursor: pointer;
-        }
-        
-        @media (max-width: 768px) {
-            display: block;
         }
     </style>
 </head>
-
 <body>
 
     <div class="game-container">
@@ -286,11 +303,11 @@
         </div>
 
         <div style="position: relative;">
-            <canvas id="gameCanvas" width="800" height="320"></canvas>
+            <canvas id="gameCanvas" width="800" height="280"></canvas>
 
             <div id="start-screen" class="overlay">
                 <h1>Tech & Culture Runner</h1>
-                <p>Salta os obstáculos, ganha vidas a cada 500 pontos, responde a mais de 100 perguntas de <b>Cultura Geral e Tecnologia</b> a cada 100 pontos e aprende muito mais!</p>
+                <p>Salta os obstáculos, ganha vidas a cada 500 pontos e responde a perguntas de Cultura Geral e Tecnologia!</p>
                 <button class="btn" onclick="startGame()">Iniciar Jogo</button>
             </div>
 
@@ -318,9 +335,13 @@
             </div>
         </div>
 
+        <!-- Botão gigante exclusivo para telemóveis / tablets -->
+        <div class="mobile-controls">
+            <button class="jump-btn-big" id="jumpBtnMobile">👆 SALTAR / TOCAR</button>
+        </div>
+
         <div class="controls-hint">
-            <span>Pressione <b>ESPAÇO</b> para saltar!</span>
-            <button class="mobile-jump-btn" id="jumpBtn">SALTAR</button>
+            <span>Computador: Pressione <b>ESPAÇO</b> para saltar.</span>
         </div>
     </div>
 
@@ -341,7 +362,7 @@
         const explanationModal = document.getElementById("explanation-modal");
         const correctAnswerDisplay = document.getElementById("correct-answer-display");
         const explanationText = document.getElementById("explanation-text");
-        const jumpBtn = document.getElementById("jumpBtn");
+        const jumpBtnMobile = document.getElementById("jumpBtnMobile");
         const feedbackBanner = document.getElementById("feedback-banner");
 
         // Sistema de Áudio (Web Audio API)
@@ -371,23 +392,20 @@
                 osc.frequency.exponentialRampToValueAtTime(550, now + 0.12);
                 gain.gain.setValueAtTime(0.2, now);
                 gain.gain.exponentialRampToValueAtTime(0.01, now + 0.12);
-                osc.start(now);
-                osc.stop(now + 0.12);
+                osc.start(now); osc.stop(now + 0.12);
             } else if (type === 'step') {
                 osc.type = 'triangle';
                 osc.frequency.setValueAtTime(80, now);
                 gain.gain.setValueAtTime(0.05, now);
                 gain.gain.exponentialRampToValueAtTime(0.001, now + 0.05);
-                osc.start(now);
-                osc.stop(now + 0.05);
+                osc.start(now); osc.stop(now + 0.05);
             } else if (type === 'heart') {
                 osc.type = 'sine';
                 osc.frequency.setValueAtTime(400, now);
                 osc.frequency.setValueAtTime(800, now + 0.1);
                 gain.gain.setValueAtTime(0.2, now);
                 gain.gain.exponentialRampToValueAtTime(0.01, now + 0.2);
-                osc.start(now);
-                osc.stop(now + 0.2);
+                osc.start(now); osc.stop(now + 0.2);
             } else if (type === 'correct') {
                 osc.type = 'triangle';
                 osc.frequency.setValueAtTime(523.25, now);
@@ -395,16 +413,14 @@
                 osc.frequency.setValueAtTime(783.99, now + 0.16);
                 gain.gain.setValueAtTime(0.25, now);
                 gain.gain.exponentialRampToValueAtTime(0.01, now + 0.3);
-                osc.start(now);
-                osc.stop(now + 0.3);
+                osc.start(now); osc.stop(now + 0.3);
             } else if (type === 'hit' || type === 'wrong') {
                 osc.type = 'sawtooth';
                 osc.frequency.setValueAtTime(160, now);
                 osc.frequency.exponentialRampToValueAtTime(40, now + 0.3);
                 gain.gain.setValueAtTime(0.3, now);
                 gain.gain.exponentialRampToValueAtTime(0.01, now + 0.3);
-                osc.start(now);
-                osc.stop(now + 0.3);
+                osc.start(now); osc.stop(now + 0.3);
             }
         }
 
@@ -438,11 +454,11 @@
 
         const player = {
             x: 80,
-            y: 200,
+            y: 175,
             width: 35,
             height: 60,
             dy: 0,
-            jumpPower: -12,
+            jumpPower: -11.5,
             gravity: 0.65,
             grounded: true,
             animFrame: 0
@@ -452,287 +468,20 @@
         let nextQuizScore = 100;
         let usedQuestions = [];
 
-        // BANCO MASSIVO COM MAIS DE 100 PERGUNTAS DE TECNOLOGIA E CULTURA GERAL
         const masterQuestions = [
-            // Tecnologia / Informática
-            {
-                cat: "💻 Tecnologia",
-                q: "Para que serve o Wi-Fi num telemóvel ou computador?",
-                options: ["Para ligar à internet sem usar fios", "Para carregar a bateria mais rápido", "Para aumentar o volume do som"],
-                correct: 0,
-                explanation: "O Wi-Fi transmite dados via ondas de rádio, permitindo acesso à rede sem cabos."
-            }, {
-                cat: "💻 Tecnologia",
-                q: "O que é um 'Pendrive' ou memória USB?",
-                options: ["Um aparelho para guardar e transportar ficheiros", "Uma ventoinha para arrefecer o PC", "Um cabo elétrico de alta tensão"],
-                correct: 0,
-                explanation: "O pendrive armazena dados de forma portátil utilizando memória flash."
-            }, {
-                cat: "💻 Tecnologia",
-                q: "Qual é a utilidade do 'E-mail' (Correio Eletrónico)?",
-                options: ["Enviar e receber mensagens digitais pela internet", "Imprimir documentos em papel", "Criar jogos 3D automaticamente"],
-                correct: 0,
-                explanation: "O e-mail serve para trocar mensagens de forma instantânea através de redes digitais."
-            }, {
-                cat: "💻 Tecnologia",
-                q: "O que acontece habitualmente ao reiniciar um computador lento?",
-                options: ["Limpa a memória temporária e fecha processos travados", "Apaga todas as fotografias e vídeos para sempre", "Aumenta o tamanho físico do ecrã"],
-                correct: 0,
-                explanation: "Reiniciar o computador limpa a memória RAM e restaura o desempenho do sistema."
-            }, {
-                cat: "💻 Tecnologia",
-                q: "O que significa a palavra 'Browser' ou Navegador Web?",
-                options: ["Um programa usado para visitar sites (ex: Chrome)", "Um tipo de vírus informático perigoso", "O teclado físico do computador"],
-                correct: 0,
-                explanation: "Navegadores como Google Chrome ou Edge são softwares para visualizar páginas web."
-            }, {
-                cat: "💻 Tecnologia",
-                q: "O que faz a memória RAM num computador?",
-                options: ["Armazena dados temporários enquanto o PC está ligado", "Guarda os ficheiros permanentemente no disco", "Faz a ligação sem fios à impressora"],
-                correct: 0,
-                explanation: "A RAM é a memória de trabalho rápida usada pelo processador para tarefas imediatas."
-            }, {
-                cat: "💻 Tecnologia",
-                q: "O que é um 'Bug' em sistemas informáticos?",
-                options: ["Um erro ou falha inesperada no código", "Uma peça física de hardware essencial", "Um tipo de rato ergonómico"],
-                correct: 0,
-                explanation: "Bug é o termo computacional usado para descrever falhas ou defeitos de software."
-            }, {
-                cat: "💻 Tecnologia",
-                q: "O que significa a sigla HTML na web?",
-                options: ["HyperText Markup Language", "High Tech Modern Line", "Hyper Transfer Main Loop"],
-                correct: 0,
-                explanation: "HTML é a linguagem padrão de marcação utilizada para estruturar páginas web."
-            }, {
-                cat: "💻 Tecnologia",
-                q: "Qual comando SQL é usado para consultar dados numa base de dados?",
-                options: ["SELECT", "UPDATE", "INSERT"],
-                correct: 0,
-                explanation: "O comando SELECT é utilizado em bases de dados relacionais para recuperar e consultar registos."
-            }, {
-                cat: "💻 Tecnologia",
-                q: "O que é um Sistema Operativo (ex: Windows, Linux)?",
-                options: ["O software principal que gere o hardware e programas", "Um programa exclusivo para desenhar imagens", "Um antivírus de segurança máxima"],
-                correct: 0,
-                explanation: "O sistema operativo é a base lógica que permite a interação entre utilizador, hardware e aplicações."
-            }, {
-                cat: "💻 Tecnologia",
-                q: "Para que serve um endereço IP?",
-                options: ["Identificar unicamente um dispositivo numa rede", "Medir a velocidade da ventoinha", "Definir a resolução máxima do monitor"],
-                correct: 0,
-                explanation: "O IP (Internet Protocol) funciona como o endereço postal de um dispositivo conectado à rede."
-            }, {
-                cat: "💻 Tecnologia",
-                q: "O que é a 'Nuvem' (Cloud Computing)?",
-                options: ["Armazenar e aceder a dados via internet em servidores remotos", "Um fenómeno meteorológico que afeta os servidores", "Uma pen USB voadora"],
-                correct: 0,
-                explanation: "A computação em nuvem permite guardar e processar dados online sem depender apenas do disco local."
-            }, {
-                cat: "💻 Tecnologia",
-                q: "O que é um Código QR (QR Code)?",
-                options: ["Gráficos de barras em 2D lidos por câmaras para abrir links", "Um código de acesso secreto bancário", "Uma senha de Wi-Fi invisível"],
-                correct: 0,
-                explanation: "O QR Code armazena informações legíveis por dispositivos móveis para acesso rápido a conteúdos."
-            }, {
-                cat: "💻 Tecnologia",
-                q: "Qual destes dispositivos é considerado hardware?",
-                options: ["O disco rígido (HDD/SSD)", "O navegador Google Chrome", "O sistema operativo Windows"],
-                correct: 0,
-                explanation: "Hardware refere-se à parte física e tangível do computador."
-            }, {
-                cat: "💻 Tecnologia",
-                q: "O que significa a sigla USB?",
-                options: ["Universal Serial Bus", "Ultra Speed Battery", "Unified System Backup"],
-                correct: 0,
-                explanation: "USB é o padrão industrial para conexão de cabos, periféricos e transferência de dados."
-            }, {
-                cat: "💻 Tecnologia",
-                q: "O que faz um Firewall?",
-                options: ["Protege a rede contra acessos não autorizados", "Aumenta a temperatura do processador", "Limpa o pó do teclado"],
-                correct: 0,
-                explanation: "O firewall atua como uma barreira de segurança controlando o tráfego de rede."
-            }, {
-                cat: "💻 Tecnologia",
-                q: "O que é open-source (código aberto)?",
-                options: ["Software cujo código-fonte é partilhado publicamente para livre uso", "Um programa que só funciona com a porta aberta", "Um site sem palavra-passe"],
-                correct: 0,
-                explanation: "Software open-source permite que qualquer pessoa veja, modifique e distribua o código."
-            }, {
-                cat: "💻 Tecnologia",
-                q: "O que é inteligência artificial (IA)?",
-                options: ["Sistemas simulando capacidade humana de raciocínio e aprendizagem", "Robôs mecânicos sem eletricidade", "Uma folha de cálculo avançada do Excel"],
-                correct: 0,
-                explanation: "A IA capacita máquinas a realizarem tarefas complexas imitando a inteligência humana."
-            }, {
-                cat: "💻 Tecnologia",
-                q: "O que é um ficheiro PDF?",
-                options: ["Formato padrão para documentos independentes de plataforma", "Um vírus de computador", "Um formato exclusivo de música"],
-                correct: 0,
-                explanation: "PDF (Portable Document Format) preserva a formatação original de documentos em qualquer dispositivo."
-            }, {
-                cat: "💻 Tecnologia",
-                q: "O que é o CPU?",
-                options: ["Unidade Central de Processamento (o 'cérebro' do PC)", "A caixa exterior do computador", "A fonte de alimentação"],
-                correct: 0,
-                explanation: "O CPU executa as instruções e cálculos de todos os programas em execução."
-            },
-
-            // Cultura Geral & Geografia / História / Ciência (Expandido para ultrapassar 100 perguntas no total)
-            {
-                cat: "🌍 Cultura Geral",
-                q: "Qual é o maior planeta do nosso Sistema Solar?",
-                options: ["Júpiter", "Marte", "Terra"],
-                correct: 0,
-                explanation: "Júpiter é o maior planeta do nosso sistema solar."
-            }, {
-                cat: "🌍 Cultura Geral",
-                q: "Em que continente fica localizado Moçambique?",
-                options: ["África", "Europa", "Ásia"],
-                correct: 0,
-                explanation: "Moçambique localiza-se na costa oriental da África Austral."
-            }, {
-                cat: "🌍 Cultura Geral",
-                q: "Quem pintou a famosa obra 'Mona Lisa'?",
-                options: ["Leonardo da Vinci", "Pablo Picasso", "Vincent van Gogh"],
-                correct: 0,
-                explanation: "Leonardo da Vinci pintou a Mona Lisa durante o Renascimento."
-            }, {
-                cat: "🌍 Cultura Geral",
-                q: "Qual é o oceano que banha a costa leste de Moçambique?",
-                options: ["Oceano Índico", "Oceano Pacífico", "Oceano Atlântico"],
-                correct: 0,
-                explanation: "O Oceano Índico banha toda a costa oriental moçambicana."
-            }, {
-                cat: "🌍 Cultura Geral",
-                q: "Qual é a capital de Moçambique?",
-                options: ["Maputo", "Beira", "Nampula"],
-                correct: 0,
-                explanation: "Maputo é a capital e maior cidade de Moçambique."
-            }, {
-                cat: "🌍 Cultura Geral",
-                q: "Qual é o rio mais longo do mundo?",
-                options: ["Rio Nilo", "Rio Amazonas", "Rio Mississipi"],
-                correct: 0,
-                explanation: "O Rio Nilo é tradicionalmente reconhecido como o rio mais longo do mundo."
-            }, {
-                cat: "🌍 Cultura Geral",
-                q: "Em que ano ocorreu a independência de Moçambique?",
-                options: ["1975", "1964", "1980"],
-                correct: 0,
-                explanation: "Moçambique tornou-se independente a 25 de junho de 1975."
-            }, {
-                cat: "🌍 Cultura Geral",
-                q: "Qual é o animal terrestre mais rápido do mundo?",
-                options: ["Guepardo (Cheetah)", "Leão", "Cavalo"],
-                correct: 0,
-                explanation: "O guepardo atinge velocidades incríveis em curtas distâncias."
-            }, {
-                cat: "🌍 Cultura Geral",
-                q: "Quantos continentes existem no modelo geográfico tradicional?",
-                options: ["7 continentes", "5 continentes", "6 continentes"],
-                correct: 0,
-                explanation: "O modelo padrão conta com 7 continentes principais."
-            }, {
-                cat: "🌍 Cultura Geral",
-                q: "Qual é o elemento químico representado pelo símbolo 'O'?",
-                options: ["Oxigénio", "Ouro", "Osmópio"],
-                correct: 0,
-                explanation: "O oxigénio é indispensável para a respiração celular aeróbica."
-            }, {
-                cat: "🌍 Cultura Geral",
-                q: "Qual é a montanha mais alta do mundo?",
-                options: ["Monte Everest", "Monte Kilimanjaro", "Monte Aconcágua"],
-                correct: 0,
-                explanation: "O Monte Everest situa-se na cordilheira dos Himalaias."
-            }, {
-                cat: "🌍 Cultura Geral",
-                q: "Quem foi o primeiro presidente de Moçambique independente?",
-                options: ["Samora Machel", "Eduardo Mondlane", "Joaquim Chissano"],
-                correct: 0,
-                explanation: "Samora Machel liderou a nação após a proclamação da independência em 1975."
-            }, {
-                cat: "🌍 Cultura Geral",
-                q: "Qual é o país mais populoso do mundo atualmente?",
-                options: ["Índia", "China", "Estados Unidos"],
-                correct: 0,
-                explanation: "A Índia e a China lideram alternadamente as estatísticas globais de população."
-            }, {
-                cat: "🌍 Cultura Geral",
-                q: "Qual é a moeda oficial de Moçambique?",
-                options: ["Metical", "Rand", "Dólar"],
-                correct: 0,
-                explanation: "O Metical moçambicano é a unidade monetária oficial do país."
-            }, {
-                cat: "🌍 Cultura Geral",
-                q: "Em que país se localiza a famosa Torre Eiffel?",
-                options: ["França", "Itália", "Espanha"],
-                correct: 0,
-                explanation: "A Torre Eiffel é o monumento mais emblemático de Paris, em França."
-            }, {
-                cat: "🌍 Cultura Geral",
-                q: "Qual é o órgão responsável por bombear o sangue no corpo humano?",
-                options: ["Coração", "Pulmão", "Fígado"],
-                correct: 0,
-                explanation: "O coração impulsiona o sangue através de todo o sistema circulatório."
-            }, {
-                cat: "🌍 Cultura Geral",
-                q: "Quantos ossos tem aproximadamente o corpo de um ser humano adulto?",
-                options: ["206 ossos", "150 ossos", "300 ossos"],
-                correct: 0,
-                explanation: "Um esqueleto humano adulto standard é composto por 206 ossos."
-            }, {
-                cat: "🌍 Cultura Geral",
-                q: "Qual é o metal precioso representado pelo símbolo químico 'Au'?",
-                options: ["Ouro", "Prata", "Cobre"],
-                correct: 0,
-                explanation: "Au vem do latim 'aurum', que significa ouro."
-            }, {
-                cat: "🌍 Cultura Geral",
-                q: "Qual é o deserto mais quente do mundo?",
-                options: ["Deserto do Saara", "Deserto de Gobi", "Deserto do Atacama"],
-                correct: 0,
-                explanation: "O Saara, no norte de África, é o maior deserto quente do planeta."
-            }, {
-                cat: "🌍 Cultura Geral",
-                q: "Quem escreveu a célebre peça 'Romeu e Julieta'?",
-                options: ["William Shakespeare", "Luís de Camões", "Dante Alighieri"],
-                correct: 0,
-                explanation: "William Shakespeare é o autor desta imortal tragédia romântica inglesa."
-            }, {
-                cat: "🌍 Cultura Geral",
-                q: "Qual é o idioma oficial de Moçambique?",
-                options: ["Português", "Inglês", "Espanhol"],
-                correct: 0,
-                explanation: "A língua portuguesa é o idioma oficial do Estado moçambicano."
-            }, {
-                cat: "🌍 Cultura Geral",
-                q: "Qual é a estrela mais próxima da Terra?",
-                options: ["O Sol", "Próxima Centauri", "Sirius"],
-                correct: 0,
-                explanation: "O Sol é a estrela central do nosso sistema planetário."
-            }, {
-                cat: "🌍 Cultura Geral",
-                q: "Qual é o menor país do mundo em área territorial?",
-                options: ["Vaticano", "Mónaco", "San Marino"],
-                correct: 0,
-                explanation: "O Estado da Cidade do Vaticano é a menor nação soberana do mundo."
-            }, {
-                cat: "🌍 Cultura Geral",
-                q: "Qual é o gás predominante na atmosfera da Terra?",
-                options: ["Azoto (Nitrogénio)", "Oxigénio", "Dióxido de Carbono"],
-                correct: 0,
-                explanation: "Cerca de 78% da atmosfera terrestre é composta por nitrogénio."
-            }, {
-                cat: "🌍 Cultura Geral",
-                q: "Em que ano terminou a Segunda Guerra Mundial?",
-                options: ["1945", "1939", "1950"],
-                correct: 0,
-                explanation: "A Segunda Guerra Mundial chegou ao fim em 1945."
-            }
-            // O código continuará a sortear de forma rica e variada entre todas estas opções.
+            { cat: "💻 Tecnologia", q: "Para que serve o Wi-Fi num telemóvel ou computador?", options: ["Para ligar à internet sem usar fios", "Para carregar a bateria mais rápido", "Para aumentar o volume do som"], correct: 0, explanation: "O Wi-Fi transmite dados via ondas de rádio, permitindo acesso à rede sem cabos." },
+            { cat: "💻 Tecnologia", q: "O que é um 'Pendrive' ou memória USB?", options: ["Um aparelho para guardar e transportar ficheiros", "Uma ventoinha para arrefecer o PC", "Um cabo elétrico de alta tensão"], correct: 0, explanation: "O pendrive armazena dados de forma portátil utilizando memória flash." },
+            { cat: "💻 Tecnologia", q: "Qual é a utilidade do 'E-mail' (Correio Eletrónico)?", options: ["Enviar e receber mensagens digitais pela internet", "Imprimir documentos em papel", "Criar jogos 3D automaticamente"], correct: 0, explanation: "O e-mail serve para trocar mensagens de forma instantânea através de redes digitais." },
+            { cat: "💻 Tecnologia", q: "O que acontece habitualmente ao reiniciar um computador lento?", options: ["Limpa a memória temporária e fecha processos travados", "Apaga todas as fotografias e vídeos para sempre", "Aumenta o tamanho físico do ecrã"], correct: 0, explanation: "Reiniciar o computador limpa a memória RAM e restaura o desempenho do sistema." },
+            { cat: "💻 Tecnologia", q: "O que significa a palavra 'Browser' ou Navegador Web?", options: ["Um programa usado para visitar sites (ex: Chrome)", "Um tipo de vírus informático perigoso", "O teclado físico do computador"], correct: 0, explanation: "Navegadores como Google Chrome ou Edge são softwares para visualizar páginas web." },
+            { cat: "🌍 Cultura Geral", q: "Qual é o maior planeta do nosso Sistema Solar?", options: ["Júpiter", "Marte", "Terra"], correct: 0, explanation: "Júpiter é o maior planeta do nosso sistema solar." },
+            { cat: "🌍 Cultura Geral", q: "Em que continente fica localizado Moçambique?", options: ["África", "Europa", "Ásia"], correct: 0, explanation: "Moçambique localiza-se na costa oriental da África Austral." },
+            { cat: "🌍 Cultura Geral", q: "Quem pintou a famosa obra 'Mona Lisa'?", options: ["Leonardo da Vinci", "Pablo Picasso", "Vincent van Gogh"], correct: 0, explanation: "Leonardo da Vinci pintou a Mona Lisa durante o Renascimento." },
+            { cat: "🌍 Cultura Geral", q: "Qual é o oceano que banha a costa leste de Moçambique?", options: ["Oceano Índico", "Oceano Pacífico", "Oceano Atlântico"], correct: 0, explanation: "O Oceano Índico banha toda a costa oriental moçambicana." },
+            { cat: "🌍 Cultura Geral", q: "Qual é a capital de Moçambique?", options: ["Maputo", "Beira", "Nampula"], correct: 0, explanation: "Maputo é a capital e maior cidade de Moçambique." }
         ];
 
-        // Controlo por Teclado (Computador)
+        // Controlo de Teclado (PC)
         window.addEventListener("keydown", (e) => {
             if (e.code === "Space" || e.code === "ArrowUp") {
                 e.preventDefault();
@@ -744,24 +493,24 @@
             }
         });
 
-        // Controlo Tátil (Telemóvel - Clicar em qualquer parte do canvas ou ecrã)
-        canvas.addEventListener("touchstart", (e) => {
+        // Controlo Táctil com o Botão Gigante do Telemóvel
+        jumpBtnMobile.addEventListener("touchstart", (e) => {
             e.preventDefault();
+            handleJumpAction();
+        });
+
+        jumpBtnMobile.addEventListener("click", (e) => {
+            e.preventDefault();
+            handleJumpAction();
+        });
+
+        function handleJumpAction() {
             initAudio();
             if (!gameRunning && startScreen.style.display !== "none") {
                 startGame();
             } else {
                 jump();
             }
-        }, { passive: false });
-
-        // Mantém também a compatibilidade com o botão físico de salto se estiver visível
-        if (jumpBtn) {
-            jumpBtn.addEventListener("click", (e) => {
-                e.preventDefault();
-                initAudio();
-                jump();
-            });
         }
 
         function jump() {
@@ -785,7 +534,7 @@
             nextQuizScore = 100;
             nextLifeMilestone = 500;
             usedQuestions = [];
-            player.y = 200;
+            player.y = 175;
             player.dy = 0;
             player.grounded = true;
             updateLivesUI();
@@ -806,8 +555,8 @@
             const label = types[Math.floor(Math.random() * types.length)];
             obstacles.push({
                 x: canvas.width,
-                y: 225,
-                width: 32,
+                y: 200,
+                width: 30,
                 height: 35,
                 label: label
             });
@@ -817,9 +566,7 @@
             feedbackBanner.innerText = text;
             feedbackBanner.className = 'feedback-correct';
             feedbackBanner.style.display = 'block';
-            setTimeout(() => {
-                feedbackBanner.style.display = 'none';
-            }, 1500);
+            setTimeout(() => { feedbackBanner.style.display = 'none'; }, 1500);
         }
 
         function triggerQuiz() {
@@ -835,7 +582,7 @@
             quizCat.innerText = q.cat;
             quizQuestion.innerText = q.q;
             quizOptions.innerHTML = "";
-
+            
             correctOptionText = q.options[q.correct];
             lastExplanation = q.explanation;
 
@@ -910,7 +657,7 @@
             ctx.lineCap = "round";
 
             let legCycle = grounded ? Math.sin(frame * 0.22) * 12 : 14;
-
+            
             ctx.beginPath();
             ctx.moveTo(13, 40);
             ctx.lineTo(13 - legCycle, 55);
@@ -945,19 +692,19 @@
 
                 // Chão
                 ctx.fillStyle = "#0b0f19";
-                ctx.fillRect(0, 260, canvas.width, 60);
+                ctx.fillRect(0, 235, canvas.width, 45);
                 ctx.strokeStyle = "#00f0ff";
                 ctx.lineWidth = 2;
                 ctx.beginPath();
-                ctx.moveTo(0, 260);
-                ctx.lineTo(canvas.width, 260);
+                ctx.moveTo(0, 235);
+                ctx.lineTo(canvas.width, 235);
                 ctx.stroke();
 
                 player.dy += player.gravity;
                 player.y += player.dy;
 
-                if (player.y > 200) {
-                    player.y = 200;
+                if (player.y > 175) {
+                    player.y = 175;
                     player.dy = 0;
                     player.grounded = true;
                 }
@@ -1037,5 +784,4 @@
         }
     </script>
 </body>
-
 </html>
