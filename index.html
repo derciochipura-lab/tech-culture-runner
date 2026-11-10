@@ -732,6 +732,7 @@
             // O código continuará a sortear de forma rica e variada entre todas estas opções.
         ];
 
+        // Controlo por Teclado (Computador)
         window.addEventListener("keydown", (e) => {
             if (e.code === "Space" || e.code === "ArrowUp") {
                 e.preventDefault();
@@ -743,9 +744,25 @@
             }
         });
 
-        jumpBtn.addEventListener("click", () => {
-            jump();
-        });
+        // Controlo Tátil (Telemóvel - Clicar em qualquer parte do canvas ou ecrã)
+        canvas.addEventListener("touchstart", (e) => {
+            e.preventDefault();
+            initAudio();
+            if (!gameRunning && startScreen.style.display !== "none") {
+                startGame();
+            } else {
+                jump();
+            }
+        }, { passive: false });
+
+        // Mantém também a compatibilidade com o botão físico de salto se estiver visível
+        if (jumpBtn) {
+            jumpBtn.addEventListener("click", (e) => {
+                e.preventDefault();
+                initAudio();
+                jump();
+            });
+        }
 
         function jump() {
             if (player.grounded && gameRunning && !gamePaused) {
