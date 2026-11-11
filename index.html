@@ -21,18 +21,20 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            height: 100dvh;
+            height: 100vh;
             width: 100vw;
             overflow: hidden;
             touch-action: manipulation;
         }
 
+        /* MOLDURA PRINCIPAL DO JOGO (TUDO DENTRO DA CAIXA) */
         .game-container {
             width: 100%;
-            max-width: 430px;
+            max-width: 420px;
             height: 100%;
+            max-height: 780px;
             background: #0f172a;
-            box-shadow: 0 0 30px rgba(0, 240, 255, 0.2);
+            box-shadow: 0 0 30px rgba(0, 240, 255, 0.25);
             display: flex;
             flex-direction: column;
             justify-content: space-between;
@@ -48,12 +50,12 @@
             }
         }
 
-        /* CABEÇALHO COMPACTO */
+        /* CABEÇALHO */
         .header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 6px 10px;
+            padding: 8px 12px;
             background: rgba(11, 15, 25, 0.98);
             border-bottom: 2px solid rgba(0, 240, 255, 0.3);
             z-index: 5;
@@ -69,7 +71,7 @@
         .stat-badge {
             background: #1e293b;
             border: 1px solid #334155;
-            padding: 2px 6px;
+            padding: 3px 8px;
             border-radius: 6px;
             font-size: 0.75rem;
             font-weight: 700;
@@ -85,7 +87,7 @@
         .lives-badge {
             background: #1e293b;
             border: 1px solid #334155;
-            padding: 2px 6px;
+            padding: 3px 8px;
             border-radius: 6px;
             font-size: 0.8rem;
             letter-spacing: 1px;
@@ -95,13 +97,14 @@
             background: #1e293b;
             color: #00f0ff;
             border: 1px solid #00f0ff;
-            padding: 3px 8px;
+            padding: 4px 10px;
             border-radius: 6px;
             cursor: pointer;
             font-weight: bold;
-            font-size: 0.75rem;
+            font-size: 0.8rem;
         }
 
+        /* ÁREA DO CANVAS (JOGO) */
         .canvas-wrapper {
             position: relative;
             flex-grow: 1;
@@ -118,6 +121,7 @@
             height: 100%;
         }
 
+        /* ECRÃS DE OVERLAY (INICIAL / GAME OVER) */
         .overlay {
             position: absolute;
             top: 0;
@@ -168,13 +172,13 @@
             transform: scale(0.96);
         }
 
-        /* ÁREA DO BOTÃO SALTAR FIXA E SEMPRE VISÍVEL NO FUNDO */
+        /* BOTÃO SALTAR AGORA DENTRO DO ESPAÇO VAZIO INFERIOR DA MOLDURA */
         .mobile-touch-area {
             background: #070a14;
             padding: 8px 12px;
             text-align: center;
             border-top: 2px solid rgba(0, 240, 255, 0.3);
-            height: 70px;
+            height: 68px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -188,9 +192,9 @@
             background: linear-gradient(135deg, #00f0ff 0%, #3b82f6 100%);
             color: #050811;
             border: none;
-            font-size: 1.3rem;
+            font-size: 1.2rem;
             font-weight: 900;
-            border-radius: 10px;
+            border-radius: 8px;
             box-shadow: 0 3px 15px rgba(0, 240, 255, 0.4);
             letter-spacing: 1px;
             cursor: pointer;
@@ -363,7 +367,7 @@
 
         <!-- ÁREA DO JOGO (CANVAS) -->
         <div class="canvas-wrapper" id="canvasArea">
-            <canvas id="gameCanvas" width="400" height="300"></canvas>
+            <canvas id="gameCanvas" width="400" height="260"></canvas>
 
             <div id="start-screen" class="overlay">
                 <h1>Quiz & Culture Runner</h1>
@@ -395,7 +399,7 @@
             </div>
         </div>
 
-        <!-- BOTÃO SALTAR GARANTIDO NA BARRA INFERIOR -->
+        <!-- BOTÃO SALTAR DENTRO DA MOLDURA NO ESPAÇO INFERIOR -->
         <div class="mobile-touch-area">
             <button class="jump-btn-big" id="jumpBtn">👆 SALTAR</button>
         </div>
@@ -423,7 +427,6 @@
         const feedbackBanner = document.getElementById("feedback-banner");
         const pauseBtn = document.getElementById("pauseBtn");
 
-        // BANCO DE PERGUNTAS GERAIS, ACESSÍVEIS E DIVERTIDAS PARA O PÚBLICO EM GERAL
         const masterQuestions = [
             { cat: "🌍 Geografia", q: "Qual é a capital de Moçambique?", options: ["Maputo", "Beira", "Nampula"], correct: 0, explanation: "Maputo é a capital e a maior cidade de Moçambique." },
             { cat: "🌍 Geografia", q: "Qual é o oceano que banha a costa de Moçambique?", options: ["Oceano Índico", "Oceano Atlântico", "Oceano Pacífico"], correct: 0, explanation: "A costa oriental moçambicana é inteiramente banhada pelo Oceano Índico." },
@@ -531,12 +534,12 @@
 
         const player = {
             x: 60,
-            y: 200,
+            y: 170,
             width: 32,
             height: 50,
             dy: 0,
-            jumpPower: -11,
-            gravity: 0.65,
+            jumpPower: -10,
+            gravity: 0.6,
             grounded: true,
             animFrame: 0
         };
@@ -628,7 +631,7 @@
             nextLifeMilestone = 500;
             activeQuestions = shuffleQuestions();
             questionIndex = 0;
-            player.y = 200;
+            player.y = 170;
             player.dy = 0;
             player.grounded = true;
             updateLivesUI();
@@ -650,9 +653,9 @@
             const label = types[Math.floor(Math.random() * types.length)];
             obstacles.push({
                 x: canvas.width,
-                y: 220,
-                width: 32,
-                height: 32,
+                y: 190,
+                width: 30,
+                height: 30,
                 label: label
             });
         }
@@ -768,12 +771,12 @@
             
             ctx.beginPath();
             ctx.moveTo(11, 36);
-            ctx.lineTo(11 - legCycle, 48);
+            ctx.lineTo(11 - legCycle, 44);
             ctx.stroke();
 
             ctx.beginPath();
             ctx.moveTo(21, 36);
-            ctx.lineTo(21 + legCycle, 48);
+            ctx.lineTo(21 + legCycle, 44);
             ctx.stroke();
 
             ctx.strokeStyle = "#e0ac69";
@@ -781,12 +784,12 @@
 
             ctx.beginPath();
             ctx.moveTo(10, 18);
-            ctx.lineTo(10 + legCycle, 28);
+            ctx.lineTo(10 + legCycle, 26);
             ctx.stroke();
 
             ctx.beginPath();
             ctx.moveTo(22, 18);
-            ctx.lineTo(22 - legCycle, 28);
+            ctx.lineTo(22 - legCycle, 26);
             ctx.stroke();
 
             ctx.restore();
@@ -797,20 +800,21 @@
 
             ctx.clearRect(0, 0, canvas.width, canvas.height);
 
+            // Chão do jogo
             ctx.fillStyle = "#070a14";
-            ctx.fillRect(0, 250, canvas.width, 50);
+            ctx.fillRect(0, 220, canvas.width, 40);
             ctx.strokeStyle = "#00f0ff";
             ctx.lineWidth = 2;
             ctx.beginPath();
-            ctx.moveTo(0, 250);
-            ctx.lineTo(canvas.width, 250);
+            ctx.moveTo(0, 220);
+            ctx.lineTo(canvas.width, 220);
             ctx.stroke();
 
             player.dy += player.gravity;
             player.y += player.dy;
 
-            if (player.y > 200) {
-                player.y = 200;
+            if (player.y > 170) {
+                player.y = 170;
                 player.dy = 0;
                 player.grounded = true;
             }
@@ -836,7 +840,7 @@
 
                 ctx.fillStyle = "#ffffff";
                 ctx.font = "bold 6px sans-serif";
-                ctx.fillText(obs.label, obs.x + 2, obs.y + 20);
+                ctx.fillText(obs.label, obs.x + 2, obs.y + 18);
 
                 if (
                     player.x < obs.x + obs.width &&
