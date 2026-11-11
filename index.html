@@ -9,13 +9,13 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
             user-select: none;
             -webkit-user-select: none;
         }
 
         body {
-            background: #090d16;
+            background: #050811;
             color: #f8fafc;
             display: flex;
             flex-direction: column;
@@ -30,32 +30,33 @@
             width: 100%;
             max-width: 450px;
             height: 100vh;
-            max-height: 800px;
-            background: #111827;
-            box-shadow: 0 10px 30px rgba(0, 240, 255, 0.2);
+            max-height: 820px;
+            background: #0f172a;
+            box-shadow: 0 0 40px rgba(0, 240, 255, 0.25);
             display: flex;
             flex-direction: column;
             justify-content: space-between;
             border: 2px solid #00f0ff;
             position: relative;
+            overflow: hidden;
         }
 
         @media (min-width: 480px) {
             .game-container {
-                border-radius: 16px;
-                height: 700px;
+                border-radius: 20px;
+                height: 750px;
             }
         }
 
-        /* CABEÇALHO ORGANIZADO EM LINHA LIMPA */
+        /* CABEÇALHO FUTURISTA E ORGANIZADO */
         .header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 8px 10px;
-            background: #0b0f19;
-            border-bottom: 2px solid #1f2937;
-            gap: 5px;
+            padding: 10px 14px;
+            background: rgba(11, 15, 25, 0.95);
+            border-bottom: 2px solid rgba(0, 240, 255, 0.3);
+            backdrop-filter: blur(8px);
             z-index: 5;
         }
 
@@ -63,35 +64,49 @@
             display: flex;
             align-items: center;
             gap: 8px;
-            flex-wrap: nowrap;
         }
 
-        .stat-item {
-            font-size: 0.8rem;
-            font-weight: bold;
-            white-space: nowrap;
+        .stat-badge {
+            background: #1e293b;
+            border: 1px solid #334155;
+            padding: 4px 10px;
+            border-radius: 8px;
+            font-size: 0.78rem;
+            font-weight: 700;
+            color: #94a3b8;
+            box-shadow: inset 0 1px 0 rgba(255,255,255,0.1);
         }
 
-        .stat-item span {
+        .stat-badge span {
             color: #00f0ff;
+            font-size: 0.85rem;
+            margin-left: 2px;
         }
 
-        .lives-item {
+        .lives-badge {
+            background: #1e293b;
+            border: 1px solid #334155;
+            padding: 4px 10px;
+            border-radius: 8px;
             font-size: 0.85rem;
-            letter-spacing: 1px;
-            white-space: nowrap;
+            letter-spacing: 2px;
         }
 
         .pause-btn {
-            background: #1f2937;
+            background: linear-gradient(135deg, #1e293b, #0f172a);
             color: #00f0ff;
             border: 1px solid #00f0ff;
-            padding: 4px 10px;
-            border-radius: 6px;
+            padding: 6px 12px;
+            border-radius: 8px;
             cursor: pointer;
             font-weight: bold;
             font-size: 0.85rem;
-            flex-shrink: 0;
+            box-shadow: 0 0 10px rgba(0, 240, 255, 0.2);
+            transition: transform 0.1s;
+        }
+
+        .pause-btn:active {
+            transform: scale(0.92);
         }
 
         .canvas-wrapper {
@@ -100,7 +115,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            background: linear-gradient(to bottom, #070a14 0%, #0f172a 100%);
+            background: radial-gradient(circle at center, #0f172a 0%, #070a14 100%);
         }
 
         canvas {
@@ -115,53 +130,61 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(11, 15, 25, 0.96);
+            background: rgba(7, 10, 20, 0.95);
+            backdrop-filter: blur(6px);
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
             text-align: center;
-            padding: 20px;
+            padding: 24px;
             z-index: 10;
         }
 
         .overlay h1 {
-            font-size: 1.8rem;
+            font-size: 2rem;
+            font-weight: 800;
             color: #00f0ff;
-            margin-bottom: 10px;
-            text-shadow: 0 0 10px rgba(0, 240, 255, 0.5);
+            margin-bottom: 12px;
+            text-shadow: 0 0 20px rgba(0, 240, 255, 0.6);
+            letter-spacing: -0.5px;
         }
 
         .overlay p {
             font-size: 0.95rem;
-            color: #cbd5e1;
-            margin-bottom: 20px;
-            max-width: 350px;
+            color: #94a3b8;
+            margin-bottom: 24px;
+            max-width: 320px;
+            line-height: 1.5;
         }
 
         .btn {
-            background: #00f0ff;
-            color: #090d16;
+            background: linear-gradient(135deg, #00f0ff, #00a8ff);
+            color: #050811;
             border: none;
-            padding: 12px 30px;
+            padding: 14px 36px;
             font-size: 1.1rem;
-            font-weight: bold;
-            border-radius: 8px;
+            font-weight: 800;
+            border-radius: 12px;
             cursor: pointer;
-            box-shadow: 0 0 15px rgba(0, 240, 255, 0.4);
+            box-shadow: 0 0 20px rgba(0, 240, 255, 0.5);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.2s;
         }
 
-        .btn:hover {
-            background: #70f8ff;
+        .btn:active {
+            transform: scale(0.96);
+            box-shadow: 0 0 10px rgba(0, 240, 255, 0.3);
         }
 
-        /* ÁREA DO BOTÃO EMBUTIDA NA BARRA INFERIOR */
+        /* ÁREA DO BOTÃO DE SALTAR REPROJETADA */
         .mobile-touch-area {
-            background: #0b0f19;
-            padding: 10px 15px;
+            background: #070a14;
+            padding: 12px 16px;
             text-align: center;
-            border-top: 2px solid #00f0ff;
-            height: 75px;
+            border-top: 2px solid rgba(0, 240, 255, 0.3);
+            height: 85px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -170,25 +193,30 @@
         .jump-btn-big {
             width: 100%;
             height: 100%;
-            background: #00f0ff;
-            color: #090d16;
+            background: linear-gradient(135deg, #00f0ff 0%, #3b82f6 100%);
+            color: #050811;
             border: none;
-            font-size: 1.2rem;
-            font-weight: bold;
-            border-radius: 10px;
-            box-shadow: 0 4px 15px rgba(0, 240, 255, 0.3);
-            letter-spacing: 1px;
+            font-size: 1.3rem;
+            font-weight: 900;
+            border-radius: 14px;
+            box-shadow: 0 4px 20px rgba(0, 240, 255, 0.4);
+            letter-spacing: 1.5px;
             cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
+            gap: 8px;
+            transition: all 0.1s ease;
+            text-transform: uppercase;
         }
 
         .jump-btn-big:active {
-            background: #70f8ff;
-            transform: scale(0.98);
+            background: linear-gradient(135deg, #70f8ff 0%, #60a5fa 100%);
+            transform: scale(0.97);
+            box-shadow: 0 2px 10px rgba(0, 240, 255, 0.6);
         }
 
+        /* MODAL QUIZ ESTILIZADO */
         #quiz-modal {
             display: none;
             position: absolute;
@@ -196,64 +224,69 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(11, 15, 25, 0.97);
+            background: rgba(7, 10, 20, 0.96);
+            backdrop-filter: blur(8px);
             z-index: 20;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            padding: 15px;
-            text-align: center;
+            padding: 20px;
         }
 
         .quiz-box {
             background: #1e293b;
-            padding: 20px;
-            border-radius: 12px;
+            padding: 22px;
+            border-radius: 16px;
             border: 2px solid #00f0ff;
             width: 100%;
             max-width: 400px;
-            box-shadow: 0 0 25px rgba(0, 240, 255, 0.3);
+            box-shadow: 0 0 35px rgba(0, 240, 255, 0.3);
+            text-align: center;
         }
 
         .quiz-category {
             font-size: 0.75rem;
             color: #38bdf8;
             text-transform: uppercase;
-            font-weight: bold;
-            letter-spacing: 1px;
-            margin-bottom: 5px;
+            font-weight: 800;
+            letter-spacing: 1.5px;
+            margin-bottom: 8px;
         }
 
         .quiz-box h3 {
             color: #ffffff;
-            margin: 10px 0 15px 0;
-            font-size: 1rem;
+            margin-bottom: 18px;
+            font-size: 1.05rem;
+            line-height: 1.4;
         }
 
         .quiz-options {
-            display: grid;
-            grid-template-columns: 1fr;
+            display: flex;
+            flex-direction: column;
             gap: 10px;
-            margin-top: 15px;
         }
 
         .option-btn {
-            background: #334155;
+            background: #0f172a;
             color: #f8fafc;
-            border: 1px solid #475569;
-            padding: 12px;
-            border-radius: 8px;
+            border: 1px solid #334155;
+            padding: 14px;
+            border-radius: 10px;
             cursor: pointer;
             text-align: left;
             font-size: 0.9rem;
+            font-weight: 600;
+            transition: all 0.15s;
         }
 
-        .option-btn:hover, .option-btn:active {
+        .option-btn:active {
             background: #00f0ff;
-            color: #090d16;
-            font-weight: bold;
+            color: #050811;
+            border-color: #00f0ff;
+            font-weight: 800;
         }
 
+        /* MODAL EXPLICAÇÃO */
         #explanation-modal {
             display: none;
             position: absolute;
@@ -261,61 +294,68 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(11, 15, 25, 0.97);
+            background: rgba(7, 10, 20, 0.96);
+            backdrop-filter: blur(8px);
             z-index: 25;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            padding: 15px;
+            padding: 20px;
             text-align: center;
         }
 
         .explanation-box {
             background: #1e293b;
-            padding: 20px;
-            border-radius: 12px;
+            padding: 22px;
+            border-radius: 16px;
             border: 2px solid #ef4444;
             width: 100%;
             max-width: 400px;
+            box-shadow: 0 0 35px rgba(239, 68, 68, 0.3);
         }
 
         .explanation-box h3 {
             color: #ef4444;
-            margin-bottom: 10px;
-            font-size: 1.1rem;
+            margin-bottom: 12px;
+            font-size: 1.15rem;
+            font-weight: 800;
         }
 
         .explanation-box p {
-            color: #f8fafc;
-            margin-bottom: 15px;
+            color: #cbd5e1;
+            margin-bottom: 18px;
             font-size: 0.9rem;
-            line-height: 1.4;
+            line-height: 1.5;
         }
 
         #correct-answer-display {
+            background: #0f172a;
             color: #38bdf8;
-            font-weight: bold;
-            margin-bottom: 12px;
-            font-size: 0.95rem;
+            padding: 10px;
+            border-radius: 8px;
+            font-weight: 700;
+            margin-bottom: 14px;
+            font-size: 0.9rem;
+            border: 1px solid #334155;
         }
 
-        /* REBAIXADO PARA NÃO TAPAR O TOPO DO JOGO */
+        /* BANNER FEEDBACK AJUSTADO */
         #feedback-banner {
             display: none;
             position: absolute;
-            top: 45px;
+            top: 55px;
             left: 50%;
             transform: translateX(-50%);
-            padding: 6px 14px;
-            border-radius: 20px;
-            font-weight: bold;
-            font-size: 0.8rem;
+            padding: 8px 18px;
+            border-radius: 25px;
+            font-weight: 800;
+            font-size: 0.85rem;
             z-index: 30;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.4);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.5);
             white-space: nowrap;
         }
-        .feedback-correct { background: #10b981; color: white; }
-        .feedback-wrong { background: #ef4444; color: white; }
+        .feedback-correct { background: #10b981; color: white; border: 1px solid #34d399; }
+        .feedback-wrong { background: #ef4444; color: white; border: 1px solid #fca5a5; }
     </style>
 </head>
 <body>
@@ -323,14 +363,14 @@
     <div class="game-container">
         <div id="feedback-banner"></div>
 
-        <!-- CABEÇALHO REORGANIZADO -->
+        <!-- CABEÇALHO FUTURISTA -->
         <div class="header">
             <div class="stats-group">
-                <div class="stat-item">Pontos: <span id="score">0</span></div>
-                <div class="stat-item">Recorde: <span id="highscore">0</span></div>
+                <div class="stat-badge">Pts: <span id="score">0</span></div>
+                <div class="stat-badge">Rec: <span id="highscore">0</span></div>
             </div>
             <div class="stats-group">
-                <div class="lives-item" id="lives">❤️ ❤️ ❤️</div>
+                <div class="lives-badge" id="lives">❤️ ❤️ ❤️</div>
                 <button class="pause-btn" id="pauseBtn" onclick="togglePause()">⏸️</button>
             </div>
         </div>
@@ -339,8 +379,8 @@
             <canvas id="gameCanvas" width="400" height="300"></canvas>
 
             <div id="start-screen" class="overlay">
-                <h1>Quiz & Culture Runner</h1>
-                <p>Responde a perguntas de cultura geral e tecnologia. Toca em saltar para começar!</p>
+                <h1>Quiz Runner</h1>
+                <p>Testa o teu conhecimento e diverte-te! Toca no botão abaixo para correr e saltar.</p>
                 <button class="btn" id="startBtn" onclick="startGame()">Iniciar Jogo</button>
             </div>
 
@@ -368,7 +408,7 @@
             </div>
         </div>
 
-        <!-- BOTÃO DE SALTAR INTEIRAMENTE AJUSTADO NA BARRA INFERIOR -->
+        <!-- BOTÃO SALTAR DESTAQUE -->
         <div class="mobile-touch-area">
             <button class="jump-btn-big" id="jumpBtn">👆 SALTAR</button>
         </div>
@@ -768,7 +808,7 @@
 
             ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-            ctx.fillStyle = "#0b0f19";
+            ctx.fillStyle = "#070a14";
             ctx.fillRect(0, 250, canvas.width, 50);
             ctx.strokeStyle = "#00f0ff";
             ctx.lineWidth = 2;
