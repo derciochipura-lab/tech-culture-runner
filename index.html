@@ -352,8 +352,8 @@
         <!-- CABEÇALHO -->
         <div class="header">
             <div class="stats-group">
-                <div class="stat-badge">Pts: <span id="score">0</span></div>
-                <div class="stat-badge">Rec: <span id="highscore">0</span></div>
+                <div class="stat-badge">Pontos: <span id="score">0</span></div>
+                <div class="stat-badge">Recorde: <span id="highscore">0</span></div>
             </div>
             <div class="stats-group">
                 <div class="lives-badge" id="lives">❤️ ❤️ ❤️</div>
@@ -366,8 +366,8 @@
             <canvas id="gameCanvas" width="400" height="300"></canvas>
 
             <div id="start-screen" class="overlay">
-                <h1>Quiz Runner</h1>
-                <p>Responde a perguntas e desvia-te dos obstáculos. Toca abaixo para começar!</p>
+                <h1>Quiz & Culture Runner</h1>
+                <p>Responde a perguntas divertidas de cultura geral, geografia e história. Toca em saltar para começar!</p>
                 <button class="btn" id="startBtn" onclick="startGame()">Iniciar Jogo</button>
             </div>
 
@@ -423,21 +423,23 @@
         const feedbackBanner = document.getElementById("feedback-banner");
         const pauseBtn = document.getElementById("pauseBtn");
 
+        // BANCO DE PERGUNTAS GERAIS, ACESSÍVEIS E DIVERTIDAS PARA O PÚBLICO EM GERAL
         const masterQuestions = [
-            { cat: "💻 Tecnologia", q: "O que significa a sigla CPU num computador?", options: ["Unidade Central de Processamento", "Cabo Principal Universal", "Controlo de Placa Única"], correct: 0, explanation: "O CPU é o circuito eletrónico principal responsável por executar instruções de programas." },
-            { cat: "💻 Tecnologia", q: "Para que serve a memória RAM?", options: ["Armazenar dados temporários de trabalho rápido", "Guardar permanentemente fotos e vídeos", "Reduzir o aquecimento da fonte de energia"], correct: 0, explanation: "A RAM armazena temporariamente os dados dos programas em execução para acesso rápido pelo CPU." },
-            { cat: "💻 Tecnologia", q: "O que é um endereço IP numa rede?", options: ["Identificador numérico único de um dispositivo", "A velocidade máxima da ligação à internet", "Um programa antivírus instalado de fábrica"], correct: 0, explanation: "O IP funciona como a morada postal digital de um equipamento conectado a uma rede." },
-            { cat: "💻 Tecnologia", q: "Qual comando SQL é usado para consultar dados de uma tabela?", options: ["SELECT", "UPDATE", "INSERT"], correct: 0, explanation: "O comando SELECT é a instrução padrão em SQL para recuperar e consultar dados." },
-            { cat: "💻 Tecnologia", q: "O que significa a linguagem de marcação HTML?", options: ["HyperText Markup Language", "High Tech Modern Line", "Hyper Transfer Main Loop"], correct: 0, explanation: "HTML é a linguagem base usada para estruturar os conteúdos das páginas na web." },
-            { cat: "💻 Tecnologia", q: "O que é a computação em nuvem (Cloud Computing)?", options: ["Acesso a serviços e ficheiros via Internet sem guardar localmente", "Utilização de computadores movidos a energia solar", "Ligação direta de dois telemóveis por cabo"], correct: 0, explanation: "A nuvem permite guardar dados e executar aplicações em servidores remotos através da internet." },
-            { cat: "🌍 Geografia", q: "Qual é a capital da República de Moçambique?", options: ["Maputo", "Beira", "Nampula"], correct: 0, explanation: "Maputo é a capital política e administrativa de Moçambique." },
-            { cat: "🌍 Geografia", q: "Qual o oceano que banha a costa leste de Moçambique?", options: ["Oceano Índico", "Oceano Atlântico", "Oceano Pacífico"], correct: 0, explanation: "Toda a zona costeira oriental de Moçambique é banhada pelo Oceano Índico." },
-            { cat: "🌍 Geografia", q: "Qual é o maior planeta do nosso Sistema Solar?", options: ["Júpiter", "Saturno", "Neptuno"], correct: 0, explanation: "Júpiter é um gigante gasoso e o maior planeta a orbitar o Sol." },
-            { cat: "📜 História", q: "Em que ano foi proclamada a Independência de Moçambique?", options: ["1975", "1964", "1980"], correct: 0, explanation: "Moçambique proclamou a sua independência nacional a 25 de junho de 1975." },
-            { cat: "📜 História", q: "Quem foi o primeiro Presidente de Moçambique independente?", options: ["Samora Machel", "Eduardo Mondlane", "Joaquim Chissano"], correct: 0, explanation: "Samora Moisés Machel assumiu como o primeiro Presidente do país em 1975." },
-            { cat: "🔬 Ciência", q: "Qual é a velocidade aproximada da luz no vácuo?", options: ["300.000 km por segundo", "150.000 km por segundo", "1.000.000 km por segundo"], correct: 0, explanation: "A luz viaja no vácuo a uma velocidade aproximada de 300.000 quilómetros por segundo." },
-            { cat: "⚽ Desporto", q: "Qual atleta moçambicana ganhou a medalha de ouro nos Jogos Olímpicos de 2000?", options: ["Lurdes Mutola", "Maria de Lurdes", "Elisa Cossa"], correct: 0, explanation: "Lurdes Mutola conquistou a medalha de ouro olímpica na prova dos 800 metros em Sidney 2000." },
-            { cat: "🎨 Cultura", q: "Qual é a moeda oficial emitida e utilizada em Moçambique?", options: ["Metical", "Rand", "Dólar"], correct: 0, explanation: "O Metical é a unidade monetária oficial da República de Moçambique." }
+            { cat: "🌍 Geografia", q: "Qual é a capital de Moçambique?", options: ["Maputo", "Beira", "Nampula"], correct: 0, explanation: "Maputo é a capital e a maior cidade de Moçambique." },
+            { cat: "🌍 Geografia", q: "Qual é o oceano que banha a costa de Moçambique?", options: ["Oceano Índico", "Oceano Atlântico", "Oceano Pacífico"], correct: 0, explanation: "A costa oriental moçambicana é inteiramente banhada pelo Oceano Índico." },
+            { cat: "📜 História", q: "Em que ano Moçambique tornou-se independente?", options: ["1975", "1964", "1980"], correct: 0, explanation: "A independência nacional de Moçambique foi proclamada a 25 de junho de 1975." },
+            { cat: "⚽ Desporto", q: "Qual foi a atleta moçambicana que ganhou a primeira medalha de ouro olímpica?", options: ["Lurdes Mutola", "Maria de Lurdes", "Elisa Cossa"], correct: 0, explanation: "Lurdes Mutola conquistou o ouro nos 800 metros nos Jogos Olímpicos de Sidney em 2000." },
+            { cat: "🎨 Cultura", q: "Qual é a moeda oficial de Moçambique?", options: ["Metical", "Rand", "Dólar"], correct: 0, explanation: "O Metical é a unidade monetária oficial emitida pelo Banco de Moçambique." },
+            { cat: "🌍 Geografia", q: "Qual é o maior planeta do nosso Sistema Solar?", options: ["Júpiter", "Saturno", "Terra"], correct: 0, explanation: "Júpiter é um gigante gasoso e o maior planeta a orbitar o Sol." },
+            { cat: "🔬 Ciência", q: "De que cor é o céu em um dia limpo e ensolarado?", options: ["Azul", "Verde", "Vermelho"], correct: 0, explanation: "O céu aparece azul devido à forma como a luz do Sol interage com a atmosfera da Terra." },
+            { cat: "🍎 Curiosidades", q: "Quantas cores tem o arco-íris?", options: ["7 cores", "5 cores", "10 cores"], correct: 0, explanation: "O arco-íris é composto tradicionalmente por sete cores visíveis: vermelho, laranja, amarelo, verde, azul, anil e violeta." },
+            { cat: "🌍 Geografia", q: "Em que continente fica o Deserto do Saara?", options: ["África", "Ásia", "América do Sul"], correct: 0, explanation: "O Saara é o maior deserto quente do mundo e localiza-se no norte de África." },
+            { cat: "⚽ Desporto", q: "Quantos jogadores compõem uma equipa de futebol em campo?", options: ["11 jogadores", "7 jogadores", "5 jogadores"], correct: 0, explanation: "Cada equipa de futebol tradicional em campo é formada por 11 jogadores." },
+            { cat: "🎬 Cinema", q: "Qual destes animais é o protagonista do filme 'O Rei Leão'?", options: ["Um leão", "Um tigre", "Um leopardo"], correct: 0, explanation: "Simba é um leão jovem que aprende sobre o ciclo da vida e o seu lugar como rei." },
+            { cat: "🌍 Geografia", q: "Qual é o país mais populoso do mundo atualmente?", options: ["Índia", "Brasil", "Japão"], correct: 0, explanation: "A Índia e a China destacam-se como os países com maior população mundial." },
+            { cat: "🔬 Ciência", q: "Qual é o elemento químico essencial para a respiração humana?", options: ["Oxigénio", "Hélio", "Carbono"], correct: 0, explanation: "Os seres humanos respiram oxigénio para manter o metabolismo celular a funcionar." },
+            { cat: "📜 História", q: "Em que província moçambicana fica localizada a cidade da Beira?", options: ["Sofala", "Nampula", "Gaza"], correct: 0, explanation: "A Beira é a capital da província de Sofala e um porto estratégico de Moçambique." },
+            { cat: "🎨 Cultura", q: "Qual é o prato tradicional moçambicano muito conhecido à base de amendoim e folhas?", options: ["Matapa", "Feijoada", "Bacalhau"], correct: 0, explanation: "A matapa é um dos pratos mais emblemáticos e apreciados da culinária moçambicana." }
         ];
 
         let activeQuestions = [];
@@ -516,7 +518,7 @@
         }
 
         let score = 0;
-        let highscore = localStorage.getItem("techCultureHighscore") || 0;
+        let highscore = localStorage.getItem("quizRunnerHighscore") || 0;
         highscoreEl.innerText = highscore;
         let lives = 3;
         let gameRunning = false;
@@ -644,12 +646,12 @@
         }
 
         function spawnObstacle() {
-            const types = ["BUG", "ERRO", "404", "GLITCH"];
+            const types = ["ATENÇÃO", "AVISO", "BARRAGEM", "BLOQUEIO"];
             const label = types[Math.floor(Math.random() * types.length)];
             obstacles.push({
                 x: canvas.width,
                 y: 220,
-                width: 28,
+                width: 32,
                 height: 32,
                 label: label
             });
@@ -735,7 +737,7 @@
             finalMsg.innerText = msg;
             if (score > highscore) {
                 highscore = score;
-                localStorage.setItem("techCultureHighscore", highscore);
+                localStorage.setItem("quizRunnerHighscore", highscore);
                 highscoreEl.innerText = highscore;
             }
             gameoverScreen.style.display = "flex";
@@ -755,7 +757,7 @@
             ctx.arc(16, 5, 7.5, Math.PI, Math.PI * 2);
             ctx.fill();
 
-            ctx.fillStyle = "#00f0ff";
+            ctx.fillStyle = "#38bdf8";
             ctx.fillRect(9, 16, 15, 20);
 
             ctx.strokeStyle = "#1e293b";
@@ -833,7 +835,7 @@
                 ctx.stroke();
 
                 ctx.fillStyle = "#ffffff";
-                ctx.font = "bold 7px sans-serif";
+                ctx.font = "bold 6px sans-serif";
                 ctx.fillText(obs.label, obs.x + 2, obs.y + 20);
 
                 if (
