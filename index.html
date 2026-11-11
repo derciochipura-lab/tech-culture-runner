@@ -47,35 +47,51 @@
             }
         }
 
+        /* CABEÇALHO ORGANIZADO EM LINHA LIMPA */
         .header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 12px 15px;
+            padding: 8px 10px;
             background: #0b0f19;
             border-bottom: 2px solid #1f2937;
+            gap: 5px;
+            z-index: 5;
         }
 
-        .stats {
+        .stats-group {
             display: flex;
-            gap: 12px;
-            font-size: 0.95rem;
+            align-items: center;
+            gap: 8px;
+            flex-wrap: nowrap;
+        }
+
+        .stat-item {
+            font-size: 0.8rem;
             font-weight: bold;
+            white-space: nowrap;
         }
 
         .stat-item span {
             color: #00f0ff;
         }
 
+        .lives-item {
+            font-size: 0.85rem;
+            letter-spacing: 1px;
+            white-space: nowrap;
+        }
+
         .pause-btn {
             background: #1f2937;
             color: #00f0ff;
             border: 1px solid #00f0ff;
-            padding: 5px 12px;
+            padding: 4px 10px;
             border-radius: 6px;
             cursor: pointer;
             font-weight: bold;
-            font-size: 0.9rem;
+            font-size: 0.85rem;
+            flex-shrink: 0;
         }
 
         .canvas-wrapper {
@@ -139,25 +155,33 @@
             background: #70f8ff;
         }
 
+        /* ÁREA DO BOTÃO EMBUTIDA NA BARRA INFERIOR */
         .mobile-touch-area {
-            background: linear-gradient(135deg, #0b0f19, #1e293b);
-            padding: 15px 20px;
+            background: #0b0f19;
+            padding: 10px 15px;
             text-align: center;
             border-top: 2px solid #00f0ff;
+            height: 75px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
         .jump-btn-big {
             width: 100%;
+            height: 100%;
             background: #00f0ff;
             color: #090d16;
             border: none;
-            padding: 16px;
-            font-size: 1.3rem;
+            font-size: 1.2rem;
             font-weight: bold;
-            border-radius: 12px;
-            box-shadow: 0 5px 20px rgba(0, 240, 255, 0.4);
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 240, 255, 0.3);
             letter-spacing: 1px;
             cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
         .jump-btn-big:active {
@@ -275,20 +299,23 @@
             font-size: 0.95rem;
         }
 
+        /* REBAIXADO PARA NÃO TAPAR O TOPO DO JOGO */
         #feedback-banner {
             display: none;
             position: absolute;
-            top: 15px;
+            top: 45px;
             left: 50%;
             transform: translateX(-50%);
-            padding: 6px 18px;
+            padding: 6px 14px;
             border-radius: 20px;
             font-weight: bold;
-            font-size: 0.9rem;
+            font-size: 0.8rem;
             z-index: 30;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.4);
+            white-space: nowrap;
         }
         .feedback-correct { background: #10b981; color: white; }
+        .feedback-wrong { background: #ef4444; color: white; }
     </style>
 </head>
 <body>
@@ -296,13 +323,14 @@
     <div class="game-container">
         <div id="feedback-banner"></div>
 
+        <!-- CABEÇALHO REORGANIZADO -->
         <div class="header">
-            <div class="stats">
+            <div class="stats-group">
                 <div class="stat-item">Pontos: <span id="score">0</span></div>
                 <div class="stat-item">Recorde: <span id="highscore">0</span></div>
             </div>
-            <div class="stats">
-                <div class="stat-item">Vidas: <span id="lives">❤️ ❤️ ❤️</span></div>
+            <div class="stats-group">
+                <div class="lives-item" id="lives">❤️ ❤️ ❤️</div>
                 <button class="pause-btn" id="pauseBtn" onclick="togglePause()">⏸️</button>
             </div>
         </div>
@@ -340,7 +368,7 @@
             </div>
         </div>
 
-        <!-- ÁREA DO BOTÃO GRANDE DE SALTAR -->
+        <!-- BOTÃO DE SALTAR INTEIRAMENTE AJUSTADO NA BARRA INFERIOR -->
         <div class="mobile-touch-area">
             <button class="jump-btn-big" id="jumpBtn">👆 SALTAR</button>
         </div>
@@ -505,7 +533,6 @@
             }
         });
 
-        // Eventos para o Botão SALTAR
         jumpBtn.addEventListener("touchstart", (e) => {
             e.preventDefault();
             handleAction();
@@ -516,7 +543,6 @@
             handleAction();
         });
 
-        // Eventos para toque direto no Canvas
         canvasArea.addEventListener("touchstart", (e) => {
             e.preventDefault();
             handleAction();
@@ -602,9 +628,9 @@
             });
         }
 
-        function showBanner(text) {
+        function showBanner(text, type) {
             feedbackBanner.innerText = text;
-            feedbackBanner.className = 'feedback-correct';
+            feedbackBanner.className = type === 'correct' ? 'feedback-correct' : 'feedback-wrong';
             feedbackBanner.style.display = 'block';
             setTimeout(() => { feedbackBanner.style.display = 'none'; }, 1500);
         }
