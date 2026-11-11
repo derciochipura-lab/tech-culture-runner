@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Tech & Culture Runner - Feira de Exposições</title>
+    <title>Quiz & Culture Runner - Feira de Exposições</title>
     <style>
         * {
             margin: 0;
@@ -297,8 +297,8 @@
 
         <div class="header">
             <div class="stats">
-                <div class="stat-item">Pts: <span id="score">0</span></div>
-                <div class="stat-item">Rec: <span id="highscore">0</span></div>
+                <div class="stat-item">Pontos: <span id="score">0</span></div>
+                <div class="stat-item">Recorde: <span id="highscore">0</span></div>
             </div>
             <div class="stats">
                 <div class="stat-item">Vidas: <span id="lives">❤️ ❤️ ❤️</span></div>
@@ -310,14 +310,14 @@
             <canvas id="gameCanvas" width="400" height="300"></canvas>
 
             <div id="start-screen" class="overlay">
-                <h1>Tech & Culture Runner</h1>
-                <p>Banco pronto com opções baralhadas e sem repetições! Toca em saltar para começar.</p>
+                <h1>Quiz & Culture Runner</h1>
+                <p>Responde a perguntas de cultura geral e tecnologia. Toca em saltar para começar!</p>
                 <button class="btn" id="startBtn" onclick="startGame()">Iniciar Jogo</button>
             </div>
 
             <div id="gameover-screen" class="overlay" style="display: none;">
                 <h1>Fim do Jogo!</h1>
-                <p id="final-msg">O sistema travou!</p>
+                <p id="final-msg">Ficaste sem vidas!</p>
                 <button class="btn" onclick="startGame()">Tentar Novamente</button>
             </div>
 
@@ -366,18 +366,38 @@
         const feedbackBanner = document.getElementById("feedback-banner");
         const pauseBtn = document.getElementById("pauseBtn");
 
-        // Banco de perguntas robusto embutido (podes adicionar centenas ou milhares aqui)
+        // BANCO ABRANGENTE DE PERGUNTAS GERAIS E TECNOLÓGICAS
         const masterQuestions = [
-            { cat: "💻 Tecnologia", q: "O que significa a sigla CPU?", options: ["Unidade Central de Processamento", "Cabo Principal Universal", "Controlo de Placa Única"], correct: 0, explanation: "O CPU é o circuito eletrónico principal responsável por executar as instruções dos programas informáticos." },
-            { cat: "🌍 Cultura Geral", q: "Qual é a capital de Moçambique?", options: ["Maputo", "Beira", "Nampula"], correct: 0, explanation: "Maputo é a capital política e a maior cidade da República de Moçambique." },
-            { cat: "💻 Tecnologia", q: "Para que serve uma memória RAM?", options: ["Armazenar dados temporários para acesso rápido", "Guardar permanentemente fotos e vídeos", "Alimentar a placa gráfica de energia"], correct: 0, explanation: "A RAM é a memória de trabalho rápida usada pelo processador para executar tarefas imediatas." },
-            { cat: "🌍 Cultura Geral", q: "Em que ano ocorreu a independência de Moçambique?", options: ["1975", "1964", "1980"], correct: 0, explanation: "Moçambique proclamou a sua independência nacional a 25 de junho de 1975." },
-            { cat: "💻 Tecnologia", q: "O que é um endereço IP?", options: ["Identificador numérico único de um dispositivo numa rede", "A velocidade máxima do processador", "Um programa antivírus instalado de fábrica"], correct: 0, explanation: "O IP (Internet Protocol) funciona como o endereço postal de um computador ou telemóvel conectado à internet." },
-            { cat: "🌍 Cultura Geral", q: "Qual é o oceano que banha a costa leste de Moçambique?", options: ["Oceano Índico", "Oceano Pacífico", "Oceano Atlântico"], correct: 0, explanation: "O Oceano Índico banha toda a extensa faixa costeira oriental do território moçambicano." },
-            { cat: "💻 Tecnologia", q: "Qual comando SQL é utilizado para extrair dados duma base de dados?", options: ["SELECT", "UPDATE", "INSERT"], correct: 0, explanation: "O comando SELECT é a instrução padrão em SQL para consultar e recuperar registos de tabelas relacionais." },
-            { cat: "🌍 Cultura Geral", q: "Quem foi o primeiro presidente de Moçambique independente?", options: ["Samora Machel", "Eduardo Mondlane", "Joaquim Chissano"], correct: 0, explanation: "Samora Moisés Machel foi o primeiro líder e presidente do país após a independência em 1975." },
-            { cat: "💻 Tecnologia", q: "O que significa a linguagem HTML na web?", options: ["HyperText Markup Language", "High Tech Modern Line", "Hyper Transfer Main Loop"], correct: 0, explanation: "HTML é a linguagem padrão de marcação utilizada estruturalmente para construir páginas web." },
-            { cat: "🌍 Cultura Geral", q: "Qual é o rio mais longo do continente africano?", options: ["Rio Nilo", "Rio Zambeze", "Rio Limpopo"], correct: 0, explanation: "O Rio Nilo é tradicionalmente reconhecido como o curso de água mais extenso do planeta." }
+            // TECNOLOGIA E INFORMÁTICA
+            { cat: "💻 Tecnologia", q: "O que significa a sigla CPU num computador?", options: ["Unidade Central de Processamento", "Cabo Principal Universal", "Controlo de Placa Única"], correct: 0, explanation: "O CPU é o circuito eletrónico principal responsável por executar instruções de programas." },
+            { cat: "💻 Tecnologia", q: "Para que serve a memória RAM?", options: ["Armazenar dados temporários de trabalho rápido", "Guardar permanentemente fotos e vídeos", "Reduzir o aquecimento da fonte de energia"], correct: 0, explanation: "A RAM armazena temporariamente os dados dos programas em execução para acesso rápido pelo CPU." },
+            { cat: "💻 Tecnologia", q: "O que é um endereço IP numa rede?", options: ["Identificador numérico único de um dispositivo", "A velocidade máxima da ligação à internet", "Um programa antivírus instalado de fábrica"], correct: 0, explanation: "O IP funciona como a morada postal digital de um equipamento conectado a uma rede." },
+            { cat: "💻 Tecnologia", q: "Qual comando SQL é usado para consultar dados de uma tabela?", options: ["SELECT", "UPDATE", "INSERT"], correct: 0, explanation: "O comando SELECT é a instrução padrão em SQL para recuperar e consultar dados." },
+            { cat: "💻 Tecnologia", q: "O que significa a linguagem de marcação HTML?", options: ["HyperText Markup Language", "High Tech Modern Line", "Hyper Transfer Main Loop"], correct: 0, explanation: "HTML é a linguagem base usada para estruturar os conteúdos das páginas na web." },
+            { cat: "💻 Tecnologia", q: "O que é a computação em nuvem (Cloud Computing)?", options: ["Acesso a serviços e ficheiros via Internet sem guardar localmente", "Utilização de computadores movidos a energia solar", "Ligação direta de dois telemóveis por cabo"], correct: 0, explanation: "A nuvem permite guardar dados e executar aplicações em servidores remotos através da internet." },
+            { cat: "💻 Tecnologia", q: "O que faz um componente de Firewall?", options: ["Filtra o tráfego de rede para bloquear acessos não autorizados", "Aumenta a resolução das imagens do monitor", "Limpa o pó das ventoinhas do computador"], correct: 0, explanation: "O firewall analisa e filtra o tráfego de entrada e saída para manter a rede segura." },
+            { cat: "💻 Tecnologia", q: "Qual a função do protocolo HTTPS num site web?", options: ["Garantir a transferência segura e encriptada de dados", "Carregar o site mais rápido no telemóvel", "Criar cópias automáticas de segurança no disco"], correct: 0, explanation: "O protocolo HTTPS encripta a comunicação entre o navegador do utilizador e o servidor do site." },
+
+            // GEOGRAFIA E CULTURA GERAL
+            { cat: "🌍 Geografia", q: "Qual é a capital da República de Moçambique?", options: ["Maputo", "Beira", "Nampula"], correct: 0, explanation: "Maputo é a capital política e administrativa de Moçambique." },
+            { cat: "🌍 Geografia", q: "Qual o oceano que banha a costa leste de Moçambique?", options: ["Oceano Índico", "Oceano Atlântico", "Oceano Pacífico"], correct: 0, explanation: "Toda a zona costeira oriental de Moçambique é banhada pelo Oceano Índico." },
+            { cat: "🌍 Geografia", q: "Qual é o maior planeta do nosso Sistema Solar?", options: ["Júpiter", "Saturno", "Neptuno"], correct: 0, explanation: "Júpiter é um gigante gasoso e o maior planeta a orbitar o Sol." },
+            { cat: "🌍 Geografia", q: "Em que continente se localiza o Deserto do Saara?", options: ["África", "Ásia", "Oceania"], correct: 0, explanation: "O Deserto do Saara situa-se na região norte do continente africano." },
+            { cat: "🌍 Geografia", q: "Em que província se localiza a cidade da Beira?", options: ["Sofala", "Manica", "Zambézia"], correct: 0, explanation: "A cidade da Beira é a capital da província moçambicana de Sofala." },
+
+            // HISTÓRIA E SOCIEDADE
+            { cat: "📜 História", q: "Em que ano foi proclamada a Independência de Moçambique?", options: ["1975", "1964", "1980"], correct: 0, explanation: "Moçambique proclamou a sua independência nacional a 25 de junho de 1975." },
+            { cat: "📜 História", q: "Quem foi o primeiro Presidente de Moçambique independente?", options: ["Samora Machel", "Eduardo Mondlane", "Joaquim Chissano"], correct: 0, explanation: "Samora Moisés Machel assumiu como o primeiro Presidente do país em 1975." },
+            { cat: "📜 História", q: "Quem é considerado o Arquitecto da Unidade Nacional em Moçambique?", options: ["Eduardo Mondlane", "Samora Machel", "Josina Machel"], correct: 0, explanation: "Eduardo Chivambo Mondlane foi o fundador e primeiro presidente da FRELIMO." },
+
+            // CIÊNCIA E NATUREZA
+            { cat: "🔬 Ciência", q: "Qual é a velocidade aproximada da luz no vácuo?", options: ["300.000 km por segundo", "150.000 km por segundo", "1.000.000 km por segundo"], correct: 0, explanation: "A luz viaja no vácuo a uma velocidade aproximada de 300.000 quilómetros por segundo." },
+            { cat: "🔬 Ciência", q: "Qual o gás essencial para a respiração humana?", options: ["Oxigénio", "Dióxido de Carbono", "Azoto"], correct: 0, explanation: "O oxigénio é captado pelos pulmões e distribuído ao organismo no processo respiratório." },
+            { cat: "🔬 Ciência", q: "Qual o elemento químico que tem como símbolo a letra 'O'?", options: ["Oxigénio", "Ouro", "Osmio"], correct: 0, explanation: "O símbolo químico 'O' representa o elemento oxigénio na Tabela Periódica." },
+
+            // DESPORTO E CULTURA
+            { cat: "⚽ Desporto", q: "Qual atleta moçambicana ganhou a medalha de ouro nos Jogos Olímpicos de 2000?", options: ["Lurdes Mutola", "Maria de Lurdes", "Elisa Cossa"], correct: 0, explanation: "Lurdes Mutola conquistou a medalha de ouro olímpica na prova dos 800 metros em Sidney 2000." },
+            { cat: "🎨 Cultura", q: "Qual é a moeda oficial emitida e utilizada em Moçambique?", options: ["Metical", "Rand", "Dólar"], correct: 0, explanation: "O Metical é a unidade monetária oficial da República de Moçambique." }
         ];
 
         let activeQuestions = [];
@@ -482,7 +502,7 @@
         let obstacles = [];
         let nextQuizScore = 100;
 
-        // Função para embaralhar perguntas aleatoriamente sem repetir
+        // Embaralhamento Fisher-Yates das perguntas
         function shuffleQuestions() {
             let arr = [...masterQuestions];
             for (let i = arr.length - 1; i > 0; i--) {
@@ -608,7 +628,7 @@
             stopRunningSound();
 
             if (questionIndex >= activeQuestions.length) {
-                activeQuestions = shuffleQuestions(); // Reembaralha se o ciclo terminar
+                activeQuestions = shuffleQuestions();
                 questionIndex = 0;
             }
 
@@ -621,23 +641,20 @@
             
             lastExplanation = qObj.explanation;
 
-            // Criar cópia das opções e embaralhar aleatoriamente a ordem dos botões
+            // Embaralhar as opções dinamicamente no ecrã
             let optionsList = qObj.options.map((opt, idx) => ({
                 text: opt,
                 isCorrect: (idx === qObj.correct)
             }));
 
-            // Algoritmo para baralhar as opções no ecrã
             for (let i = optionsList.length - 1; i > 0; i--) {
                 let j = Math.floor(Math.random() * (i + 1));
                 [optionsList[i], optionsList[j]] = [optionsList[j], optionsList[i]];
             }
 
-            // Guardar o texto correto para exibir se errar
             let correctObj = optionsList.find(o => o.isCorrect);
             correctOptionText = correctObj.text;
 
-            // Gerar os botões dinamicamente
             optionsList.forEach((optItem, index) => {
                 const btn = document.createElement("button");
                 btn.className = "option-btn";
@@ -655,7 +672,7 @@
                 playSound('correct');
                 score += 100;
                 scoreEl.innerText = score;
-                showBanner("✨ Resposta Certa! +100 pts", "correct");
+                showBanner("✨ Resposta Certa! +100 Pontos", "correct");
                 nextQuizScore = score + 100;
                 gamePaused = false;
                 startRunningSound();
