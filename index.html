@@ -27,12 +27,12 @@
             touch-action: manipulation;
         }
 
-        /* MOLDURA PRINCIPAL DO JOGO (TUDO DENTRO DA CAIXA) */
+        /* MOLDURA PRINCIPAL DO JOGO */
         .game-container {
             width: 100%;
-            max-width: 420px;
+            max-width: 400px;
             height: 100%;
-            max-height: 780px;
+            max-height: 650px;
             background: #0f172a;
             box-shadow: 0 0 30px rgba(0, 240, 255, 0.25);
             display: flex;
@@ -46,7 +46,7 @@
         @media (min-width: 480px) {
             .game-container {
                 border-radius: 16px;
-                height: 720px;
+                height: 680px;
             }
         }
 
@@ -104,7 +104,7 @@
             font-size: 0.8rem;
         }
 
-        /* ÁREA DO CANVAS (JOGO) */
+        /* ÁREA DO CANVAS */
         .canvas-wrapper {
             position: relative;
             flex-grow: 1;
@@ -121,7 +121,7 @@
             height: 100%;
         }
 
-        /* ECRÃS DE OVERLAY (INICIAL / GAME OVER) */
+        /* ECRÃS DE OVERLAY */
         .overlay {
             position: absolute;
             top: 0;
@@ -140,7 +140,7 @@
         }
 
         .overlay h1 {
-            font-size: 1.6rem;
+            font-size: 1.5rem;
             font-weight: 800;
             color: #00f0ff;
             margin-bottom: 8px;
@@ -172,13 +172,13 @@
             transform: scale(0.96);
         }
 
-        /* BOTÃO SALTAR AGORA DENTRO DO ESPAÇO VAZIO INFERIOR DA MOLDURA */
+        /* BOTÃO SALTAR POSICIONADO EXATAMENTE NO ESPAÇO VAZIO INTERIOR DA MOLDURA */
         .mobile-touch-area {
             background: #070a14;
-            padding: 8px 12px;
+            padding: 6px 10px;
             text-align: center;
             border-top: 2px solid rgba(0, 240, 255, 0.3);
-            height: 68px;
+            height: 60px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -192,7 +192,7 @@
             background: linear-gradient(135deg, #00f0ff 0%, #3b82f6 100%);
             color: #050811;
             border: none;
-            font-size: 1.2rem;
+            font-size: 1.1rem;
             font-weight: 900;
             border-radius: 8px;
             box-shadow: 0 3px 15px rgba(0, 240, 255, 0.4);
@@ -233,7 +233,7 @@
             border-radius: 14px;
             border: 2px solid #00f0ff;
             width: 100%;
-            max-width: 380px;
+            max-width: 360px;
             box-shadow: 0 0 25px rgba(0, 240, 255, 0.3);
             text-align: center;
         }
@@ -250,7 +250,7 @@
         .quiz-box h3 {
             color: #ffffff;
             margin-bottom: 12px;
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             line-height: 1.3;
         }
 
@@ -301,14 +301,14 @@
             border-radius: 14px;
             border: 2px solid #ef4444;
             width: 100%;
-            max-width: 380px;
+            max-width: 360px;
             box-shadow: 0 0 25px rgba(239, 68, 68, 0.3);
         }
 
         .explanation-box h3 {
             color: #ef4444;
             margin-bottom: 8px;
-            font-size: 1rem;
+            font-size: 0.95rem;
             font-weight: 800;
         }
 
@@ -367,7 +367,7 @@
 
         <!-- ÁREA DO JOGO (CANVAS) -->
         <div class="canvas-wrapper" id="canvasArea">
-            <canvas id="gameCanvas" width="400" height="260"></canvas>
+            <canvas id="gameCanvas" width="400" height="230"></canvas>
 
             <div id="start-screen" class="overlay">
                 <h1>Quiz & Culture Runner</h1>
@@ -399,7 +399,7 @@
             </div>
         </div>
 
-        <!-- BOTÃO SALTAR DENTRO DA MOLDURA NO ESPAÇO INFERIOR -->
+        <!-- BOTÃO SALTAR DENTRO DA CAIXA NO ESPAÇO INFERIOR -->
         <div class="mobile-touch-area">
             <button class="jump-btn-big" id="jumpBtn">👆 SALTAR</button>
         </div>
@@ -534,7 +534,7 @@
 
         const player = {
             x: 60,
-            y: 170,
+            y: 150,
             width: 32,
             height: 50,
             dy: 0,
@@ -631,7 +631,7 @@
             nextLifeMilestone = 500;
             activeQuestions = shuffleQuestions();
             questionIndex = 0;
-            player.y = 170;
+            player.y = 150;
             player.dy = 0;
             player.grounded = true;
             updateLivesUI();
@@ -653,9 +653,9 @@
             const label = types[Math.floor(Math.random() * types.length)];
             obstacles.push({
                 x: canvas.width,
-                y: 190,
-                width: 30,
-                height: 30,
+                y: 170,
+                width: 28,
+                height: 28,
                 label: label
             });
         }
@@ -802,19 +802,19 @@
 
             // Chão do jogo
             ctx.fillStyle = "#070a14";
-            ctx.fillRect(0, 220, canvas.width, 40);
+            ctx.fillRect(0, 200, canvas.width, 30);
             ctx.strokeStyle = "#00f0ff";
             ctx.lineWidth = 2;
             ctx.beginPath();
-            ctx.moveTo(0, 220);
-            ctx.lineTo(canvas.width, 220);
+            ctx.moveTo(0, 200);
+            ctx.lineTo(canvas.width, 200);
             ctx.stroke();
 
             player.dy += player.gravity;
             player.y += player.dy;
 
-            if (player.y > 170) {
-                player.y = 170;
+            if (player.y > 150) {
+                player.y = 150;
                 player.dy = 0;
                 player.grounded = true;
             }
@@ -839,8 +839,8 @@
                 ctx.stroke();
 
                 ctx.fillStyle = "#ffffff";
-                ctx.font = "bold 6px sans-serif";
-                ctx.fillText(obs.label, obs.x + 2, obs.y + 18);
+                ctx.font = "bold 5px sans-serif";
+                ctx.fillText(obs.label, obs.x + 2, obs.y + 16);
 
                 if (
                     player.x < obs.x + obs.width &&
