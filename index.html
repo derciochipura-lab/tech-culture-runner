@@ -21,7 +21,7 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            height: 100vh;
+            height: 100dvh;
             width: 100vw;
             overflow: hidden;
             touch-action: manipulation;
@@ -31,7 +31,6 @@
             width: 100%;
             max-width: 430px;
             height: 100%;
-            max-height: 750px;
             background: #0f172a;
             box-shadow: 0 0 30px rgba(0, 240, 255, 0.2);
             display: flex;
@@ -45,19 +44,20 @@
         @media (min-width: 480px) {
             .game-container {
                 border-radius: 16px;
-                height: 700px;
+                height: 720px;
             }
         }
 
-        /* CABEÇALHO COMPACTO E ELEGANTE */
+        /* CABEÇALHO COMPACTO */
         .header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 8px 12px;
+            padding: 6px 10px;
             background: rgba(11, 15, 25, 0.98);
             border-bottom: 2px solid rgba(0, 240, 255, 0.3);
             z-index: 5;
+            flex-shrink: 0;
         }
 
         .stats-group {
@@ -69,7 +69,7 @@
         .stat-badge {
             background: #1e293b;
             border: 1px solid #334155;
-            padding: 3px 8px;
+            padding: 2px 6px;
             border-radius: 6px;
             font-size: 0.75rem;
             font-weight: 700;
@@ -85,7 +85,7 @@
         .lives-badge {
             background: #1e293b;
             border: 1px solid #334155;
-            padding: 3px 8px;
+            padding: 2px 6px;
             border-radius: 6px;
             font-size: 0.8rem;
             letter-spacing: 1px;
@@ -95,11 +95,11 @@
             background: #1e293b;
             color: #00f0ff;
             border: 1px solid #00f0ff;
-            padding: 4px 10px;
+            padding: 3px 8px;
             border-radius: 6px;
             cursor: pointer;
             font-weight: bold;
-            font-size: 0.8rem;
+            font-size: 0.75rem;
         }
 
         .canvas-wrapper {
@@ -109,6 +109,7 @@
             align-items: center;
             justify-content: center;
             background: radial-gradient(circle at center, #0f172a 0%, #070a14 100%);
+            overflow: hidden;
         }
 
         canvas {
@@ -135,18 +136,18 @@
         }
 
         .overlay h1 {
-            font-size: 1.8rem;
+            font-size: 1.6rem;
             font-weight: 800;
             color: #00f0ff;
-            margin-bottom: 10px;
+            margin-bottom: 8px;
             text-shadow: 0 0 15px rgba(0, 240, 255, 0.5);
         }
 
         .overlay p {
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             color: #94a3b8;
-            margin-bottom: 20px;
-            max-width: 300px;
+            margin-bottom: 16px;
+            max-width: 280px;
             line-height: 1.4;
         }
 
@@ -154,10 +155,10 @@
             background: linear-gradient(135deg, #00f0ff, #00a8ff);
             color: #050811;
             border: none;
-            padding: 12px 30px;
-            font-size: 1rem;
+            padding: 10px 24px;
+            font-size: 0.95rem;
             font-weight: 800;
-            border-radius: 10px;
+            border-radius: 8px;
             cursor: pointer;
             box-shadow: 0 0 15px rgba(0, 240, 255, 0.4);
             text-transform: uppercase;
@@ -167,13 +168,13 @@
             transform: scale(0.96);
         }
 
-        /* BOTÃO SALTAR GARANTIDO E VISÍVEL NA BARRA INFERIOR */
+        /* ÁREA DO BOTÃO SALTAR FIXA E SEMPRE VISÍVEL NO FUNDO */
         .mobile-touch-area {
             background: #070a14;
             padding: 8px 12px;
             text-align: center;
             border-top: 2px solid rgba(0, 240, 255, 0.3);
-            height: 65px;
+            height: 70px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -187,7 +188,7 @@
             background: linear-gradient(135deg, #00f0ff 0%, #3b82f6 100%);
             color: #050811;
             border: none;
-            font-size: 1.2rem;
+            font-size: 1.3rem;
             font-weight: 900;
             border-radius: 10px;
             box-shadow: 0 3px 15px rgba(0, 240, 255, 0.4);
@@ -224,7 +225,7 @@
 
         .quiz-box {
             background: #1e293b;
-            padding: 18px;
+            padding: 16px;
             border-radius: 14px;
             border: 2px solid #00f0ff;
             width: 100%;
@@ -239,13 +240,13 @@
             text-transform: uppercase;
             font-weight: 800;
             letter-spacing: 1px;
-            margin-bottom: 6px;
+            margin-bottom: 4px;
         }
 
         .quiz-box h3 {
             color: #ffffff;
-            margin-bottom: 14px;
-            font-size: 0.95rem;
+            margin-bottom: 12px;
+            font-size: 0.9rem;
             line-height: 1.3;
         }
 
@@ -259,11 +260,11 @@
             background: #0f172a;
             color: #f8fafc;
             border: 1px solid #334155;
-            padding: 12px;
+            padding: 10px;
             border-radius: 8px;
             cursor: pointer;
             text-align: left;
-            font-size: 0.85rem;
+            font-size: 0.8rem;
             font-weight: 600;
         }
 
@@ -292,7 +293,7 @@
 
         .explanation-box {
             background: #1e293b;
-            padding: 18px;
+            padding: 16px;
             border-radius: 14px;
             border: 2px solid #ef4444;
             width: 100%;
@@ -302,15 +303,15 @@
 
         .explanation-box h3 {
             color: #ef4444;
-            margin-bottom: 10px;
-            font-size: 1.05rem;
+            margin-bottom: 8px;
+            font-size: 1rem;
             font-weight: 800;
         }
 
         .explanation-box p {
             color: #cbd5e1;
-            margin-bottom: 14px;
-            font-size: 0.85rem;
+            margin-bottom: 12px;
+            font-size: 0.8rem;
             line-height: 1.4;
         }
 
@@ -320,21 +321,21 @@
             padding: 8px;
             border-radius: 6px;
             font-weight: 700;
-            margin-bottom: 12px;
-            font-size: 0.85rem;
+            margin-bottom: 10px;
+            font-size: 0.8rem;
             border: 1px solid #334155;
         }
 
         #feedback-banner {
             display: none;
             position: absolute;
-            top: 45px;
+            top: 40px;
             left: 50%;
             transform: translateX(-50%);
-            padding: 6px 14px;
+            padding: 5px 12px;
             border-radius: 20px;
             font-weight: 800;
-            font-size: 0.8rem;
+            font-size: 0.75rem;
             z-index: 30;
             box-shadow: 0 5px 15px rgba(0,0,0,0.5);
             white-space: nowrap;
@@ -394,7 +395,7 @@
             </div>
         </div>
 
-        <!-- BOTÃO COM TEXTO SALTAR VISÍVEL NA BARRA INFERIOR -->
+        <!-- BOTÃO SALTAR GARANTIDO NA BARRA INFERIOR -->
         <div class="mobile-touch-area">
             <button class="jump-btn-big" id="jumpBtn">👆 SALTAR</button>
         </div>
