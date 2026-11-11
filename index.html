@@ -27,29 +27,39 @@
         }
 
         .game-container {
-            width: 800px;
-            max-width: 100%;
+            width: 100%;
+            max-width: 450px;
+            height: 100vh;
+            max-height: 800px;
             background: #111827;
-            border-radius: 12px;
             box-shadow: 0 10px 30px rgba(0, 240, 255, 0.2);
-            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
             border: 2px solid #00f0ff;
             position: relative;
+        }
+
+        @media (min-width: 480px) {
+            .game-container {
+                border-radius: 16px;
+                height: 700px;
+            }
         }
 
         .header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 15px 20px;
+            padding: 12px 15px;
             background: #0b0f19;
             border-bottom: 2px solid #1f2937;
         }
 
         .stats {
             display: flex;
-            gap: 20px;
-            font-size: 1.1rem;
+            gap: 12px;
+            font-size: 0.95rem;
             font-weight: bold;
         }
 
@@ -57,11 +67,30 @@
             color: #00f0ff;
         }
 
+        .pause-btn {
+            background: #1f2937;
+            color: #00f0ff;
+            border: 1px solid #00f0ff;
+            padding: 5px 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
+
+        .canvas-wrapper {
+            position: relative;
+            flex-grow: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(to bottom, #070a14 0%, #0f172a 100%);
+        }
+
         canvas {
             display: block;
-            background: linear-gradient(to bottom, #070a14 0%, #0f172a 100%);
             width: 100%;
-            height: 280px;
+            height: 100%;
         }
 
         .overlay {
@@ -70,7 +99,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(11, 15, 25, 0.95);
+            background: rgba(11, 15, 25, 0.96);
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -81,76 +110,60 @@
         }
 
         .overlay h1 {
-            font-size: 2.2rem;
+            font-size: 1.8rem;
             color: #00f0ff;
             margin-bottom: 10px;
             text-shadow: 0 0 10px rgba(0, 240, 255, 0.5);
         }
 
         .overlay p {
-            font-size: 1rem;
+            font-size: 0.95rem;
             color: #cbd5e1;
             margin-bottom: 20px;
-            max-width: 550px;
+            max-width: 350px;
         }
 
         .btn {
             background: #00f0ff;
             color: #090d16;
             border: none;
-            padding: 12px 32px;
+            padding: 12px 30px;
             font-size: 1.1rem;
             font-weight: bold;
             border-radius: 8px;
             cursor: pointer;
-            transition: all 0.2s;
             box-shadow: 0 0 15px rgba(0, 240, 255, 0.4);
         }
 
         .btn:hover {
             background: #70f8ff;
-            transform: scale(1.05);
         }
 
-        /* Botão Gigante de Salto para Telemóvel / Tátil */
-        .mobile-controls {
-            display: none;
-            background: #0b0f19;
-            padding: 15px;
+        .mobile-touch-area {
+            background: linear-gradient(135deg, #0b0f19, #1e293b);
+            padding: 20px;
             text-align: center;
-            border-top: 2px solid #1f2937;
+            border-top: 2px solid #00f0ff;
         }
 
         .jump-btn-big {
             width: 100%;
-            background: linear-gradient(135deg, #00f0ff, #0284c7);
+            background: #00f0ff;
             color: #090d16;
             border: none;
             padding: 18px;
-            font-size: 1.4rem;
+            font-size: 1.3rem;
             font-weight: bold;
-            border-radius: 10px;
-            cursor: pointer;
+            border-radius: 12px;
             box-shadow: 0 5px 20px rgba(0, 240, 255, 0.4);
-            letter-spacing: 2px;
+            letter-spacing: 1px;
         }
 
         .jump-btn-big:active {
-            transform: scale(0.96);
             background: #70f8ff;
+            transform: scale(0.98);
         }
 
-        /* Mostra os controlos mobile em ecrãs táteis / telemóveis */
-        @media (max-width: 768px), (pointer: coarse) {
-            .mobile-controls {
-                display: block;
-            }
-            canvas {
-                height: 240px;
-            }
-        }
-
-        /* Modal do Quiz */
         #quiz-modal {
             display: none;
             position: absolute;
@@ -158,12 +171,12 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(11, 15, 25, 0.96);
+            background: rgba(11, 15, 25, 0.97);
             z-index: 20;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            padding: 20px;
+            padding: 15px;
             text-align: center;
         }
 
@@ -172,13 +185,13 @@
             padding: 20px;
             border-radius: 12px;
             border: 2px solid #00f0ff;
-            max-width: 620px;
             width: 100%;
+            max-width: 400px;
             box-shadow: 0 0 25px rgba(0, 240, 255, 0.3);
         }
 
         .quiz-category {
-            font-size: 0.8rem;
+            font-size: 0.75rem;
             color: #38bdf8;
             text-transform: uppercase;
             font-weight: bold;
@@ -189,7 +202,7 @@
         .quiz-box h3 {
             color: #ffffff;
             margin: 10px 0 15px 0;
-            font-size: 1.1rem;
+            font-size: 1rem;
         }
 
         .quiz-options {
@@ -203,12 +216,11 @@
             background: #334155;
             color: #f8fafc;
             border: 1px solid #475569;
-            padding: 12px 15px;
+            padding: 12px;
             border-radius: 8px;
             cursor: pointer;
             text-align: left;
-            font-size: 0.95rem;
-            transition: all 0.2s;
+            font-size: 0.9rem;
         }
 
         .option-btn:hover, .option-btn:active {
@@ -217,7 +229,6 @@
             font-weight: bold;
         }
 
-        /* Explicação ao Errar */
         #explanation-modal {
             display: none;
             position: absolute;
@@ -225,12 +236,12 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(11, 15, 25, 0.96);
+            background: rgba(11, 15, 25, 0.97);
             z-index: 25;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            padding: 20px;
+            padding: 15px;
             text-align: center;
         }
 
@@ -239,27 +250,28 @@
             padding: 20px;
             border-radius: 12px;
             border: 2px solid #ef4444;
-            max-width: 550px;
             width: 100%;
+            max-width: 400px;
         }
 
         .explanation-box h3 {
             color: #ef4444;
             margin-bottom: 10px;
+            font-size: 1.1rem;
         }
 
         .explanation-box p {
             color: #f8fafc;
             margin-bottom: 15px;
-            font-size: 0.95rem;
+            font-size: 0.9rem;
             line-height: 1.4;
         }
 
         #correct-answer-display {
             color: #38bdf8;
             font-weight: bold;
-            margin-bottom: 15px;
-            font-size: 1rem;
+            margin-bottom: 12px;
+            font-size: 0.95rem;
         }
 
         #feedback-banner {
@@ -268,23 +280,14 @@
             top: 15px;
             left: 50%;
             transform: translateX(-50%);
-            padding: 8px 20px;
-            border-radius: 30px;
+            padding: 6px 18px;
+            border-radius: 20px;
             font-weight: bold;
-            font-size: 1rem;
+            font-size: 0.9rem;
             z-index: 30;
             box-shadow: 0 5px 15px rgba(0,0,0,0.3);
         }
         .feedback-correct { background: #10b981; color: white; }
-
-        .controls-hint {
-            padding: 10px;
-            background: #0b0f19;
-            text-align: center;
-            font-size: 0.85rem;
-            color: #94a3b8;
-            border-top: 1px solid #1f2937;
-        }
     </style>
 </head>
 <body>
@@ -294,21 +297,22 @@
 
         <div class="header">
             <div class="stats">
-                <div class="stat-item">Pontos: <span id="score">0</span></div>
-                <div class="stat-item">Recorde: <span id="highscore">0</span></div>
+                <div class="stat-item">Pts: <span id="score">0</span></div>
+                <div class="stat-item">Rec: <span id="highscore">0</span></div>
             </div>
             <div class="stats">
                 <div class="stat-item">Vidas: <span id="lives">❤️ ❤️ ❤️</span></div>
+                <button class="pause-btn" id="pauseBtn" onclick="togglePause()">⏸️</button>
             </div>
         </div>
 
-        <div style="position: relative;">
-            <canvas id="gameCanvas" width="800" height="280"></canvas>
+        <div class="canvas-wrapper" id="canvasArea">
+            <canvas id="gameCanvas" width="400" height="300"></canvas>
 
             <div id="start-screen" class="overlay">
                 <h1>Tech & Culture Runner</h1>
-                <p>Salta os obstáculos, ganha vidas a cada 500 pontos e responde a perguntas de Cultura Geral e Tecnologia!</p>
-                <button class="btn" onclick="startGame()">Iniciar Jogo</button>
+                <p>Banco pronto com opções baralhadas e sem repetições! Toca em saltar para começar.</p>
+                <button class="btn" id="startBtn" onclick="startGame()">Iniciar Jogo</button>
             </div>
 
             <div id="gameover-screen" class="overlay" style="display: none;">
@@ -335,13 +339,8 @@
             </div>
         </div>
 
-        <!-- Botão gigante exclusivo para telemóveis / tablets -->
-        <div class="mobile-controls">
-            <button class="jump-btn-big" id="jumpBtnMobile">👆 SALTAR / TOCAR</button>
-        </div>
-
-        <div class="controls-hint">
-            <span>Computador: Pressione <b>ESPAÇO</b> para saltar.</span>
+        <div class="mobile-touch-area" id="mobileTouchBtn">
+            <button class="jump-btn-big">👆 SALTAR</button>
         </div>
     </div>
 
@@ -362,19 +361,35 @@
         const explanationModal = document.getElementById("explanation-modal");
         const correctAnswerDisplay = document.getElementById("correct-answer-display");
         const explanationText = document.getElementById("explanation-text");
-        const jumpBtnMobile = document.getElementById("jumpBtnMobile");
+        const mobileTouchBtn = document.getElementById("mobileTouchBtn");
+        const canvasArea = document.getElementById("canvasArea");
         const feedbackBanner = document.getElementById("feedback-banner");
+        const pauseBtn = document.getElementById("pauseBtn");
 
-        // Sistema de Áudio (Web Audio API)
+        // Banco de perguntas robusto embutido (podes adicionar centenas ou milhares aqui)
+        const masterQuestions = [
+            { cat: "💻 Tecnologia", q: "O que significa a sigla CPU?", options: ["Unidade Central de Processamento", "Cabo Principal Universal", "Controlo de Placa Única"], correct: 0, explanation: "O CPU é o circuito eletrónico principal responsável por executar as instruções dos programas informáticos." },
+            { cat: "🌍 Cultura Geral", q: "Qual é a capital de Moçambique?", options: ["Maputo", "Beira", "Nampula"], correct: 0, explanation: "Maputo é a capital política e a maior cidade da República de Moçambique." },
+            { cat: "💻 Tecnologia", q: "Para que serve uma memória RAM?", options: ["Armazenar dados temporários para acesso rápido", "Guardar permanentemente fotos e vídeos", "Alimentar a placa gráfica de energia"], correct: 0, explanation: "A RAM é a memória de trabalho rápida usada pelo processador para executar tarefas imediatas." },
+            { cat: "🌍 Cultura Geral", q: "Em que ano ocorreu a independência de Moçambique?", options: ["1975", "1964", "1980"], correct: 0, explanation: "Moçambique proclamou a sua independência nacional a 25 de junho de 1975." },
+            { cat: "💻 Tecnologia", q: "O que é um endereço IP?", options: ["Identificador numérico único de um dispositivo numa rede", "A velocidade máxima do processador", "Um programa antivírus instalado de fábrica"], correct: 0, explanation: "O IP (Internet Protocol) funciona como o endereço postal de um computador ou telemóvel conectado à internet." },
+            { cat: "🌍 Cultura Geral", q: "Qual é o oceano que banha a costa leste de Moçambique?", options: ["Oceano Índico", "Oceano Pacífico", "Oceano Atlântico"], correct: 0, explanation: "O Oceano Índico banha toda a extensa faixa costeira oriental do território moçambicano." },
+            { cat: "💻 Tecnologia", q: "Qual comando SQL é utilizado para extrair dados duma base de dados?", options: ["SELECT", "UPDATE", "INSERT"], correct: 0, explanation: "O comando SELECT é a instrução padrão em SQL para consultar e recuperar registos de tabelas relacionais." },
+            { cat: "🌍 Cultura Geral", q: "Quem foi o primeiro presidente de Moçambique independente?", options: ["Samora Machel", "Eduardo Mondlane", "Joaquim Chissano"], correct: 0, explanation: "Samora Moisés Machel foi o primeiro líder e presidente do país após a independência em 1975." },
+            { cat: "💻 Tecnologia", q: "O que significa a linguagem HTML na web?", options: ["HyperText Markup Language", "High Tech Modern Line", "Hyper Transfer Main Loop"], correct: 0, explanation: "HTML é a linguagem padrão de marcação utilizada estruturalmente para construir páginas web." },
+            { cat: "🌍 Cultura Geral", q: "Qual é o rio mais longo do continente africano?", options: ["Rio Nilo", "Rio Zambeze", "Rio Limpopo"], correct: 0, explanation: "O Rio Nilo é tradicionalmente reconhecido como o curso de água mais extenso do planeta." }
+        ];
+
+        let activeQuestions = [];
+        let questionIndex = 0;
+
         const AudioCtx = window.AudioContext || window.webkitAudioContext;
         let audioCtx;
         let runSoundInterval = null;
 
         function initAudio() {
             if (!audioCtx) audioCtx = new AudioCtx();
-            if (audioCtx.state === 'suspended') {
-                audioCtx.resume();
-            }
+            if (audioCtx.state === 'suspended') audioCtx.resume();
         }
 
         function playSound(type) {
@@ -447,18 +462,18 @@
         let gameRunning = false;
         let gamePaused = false;
         let frameCount = 0;
-        let speed = 6;
+        let speed = 5.5;
         let correctOptionText = "";
         let lastExplanation = "";
         let nextLifeMilestone = 500;
 
         const player = {
-            x: 80,
-            y: 175,
-            width: 35,
-            height: 60,
+            x: 60,
+            y: 200,
+            width: 32,
+            height: 50,
             dy: 0,
-            jumpPower: -11.5,
+            jumpPower: -11,
             gravity: 0.65,
             grounded: true,
             animFrame: 0
@@ -466,50 +481,67 @@
 
         let obstacles = [];
         let nextQuizScore = 100;
-        let usedQuestions = [];
 
-        const masterQuestions = [
-            { cat: "💻 Tecnologia", q: "Para que serve o Wi-Fi num telemóvel ou computador?", options: ["Para ligar à internet sem usar fios", "Para carregar a bateria mais rápido", "Para aumentar o volume do som"], correct: 0, explanation: "O Wi-Fi transmite dados via ondas de rádio, permitindo acesso à rede sem cabos." },
-            { cat: "💻 Tecnologia", q: "O que é um 'Pendrive' ou memória USB?", options: ["Um aparelho para guardar e transportar ficheiros", "Uma ventoinha para arrefecer o PC", "Um cabo elétrico de alta tensão"], correct: 0, explanation: "O pendrive armazena dados de forma portátil utilizando memória flash." },
-            { cat: "💻 Tecnologia", q: "Qual é a utilidade do 'E-mail' (Correio Eletrónico)?", options: ["Enviar e receber mensagens digitais pela internet", "Imprimir documentos em papel", "Criar jogos 3D automaticamente"], correct: 0, explanation: "O e-mail serve para trocar mensagens de forma instantânea através de redes digitais." },
-            { cat: "💻 Tecnologia", q: "O que acontece habitualmente ao reiniciar um computador lento?", options: ["Limpa a memória temporária e fecha processos travados", "Apaga todas as fotografias e vídeos para sempre", "Aumenta o tamanho físico do ecrã"], correct: 0, explanation: "Reiniciar o computador limpa a memória RAM e restaura o desempenho do sistema." },
-            { cat: "💻 Tecnologia", q: "O que significa a palavra 'Browser' ou Navegador Web?", options: ["Um programa usado para visitar sites (ex: Chrome)", "Um tipo de vírus informático perigoso", "O teclado físico do computador"], correct: 0, explanation: "Navegadores como Google Chrome ou Edge são softwares para visualizar páginas web." },
-            { cat: "🌍 Cultura Geral", q: "Qual é o maior planeta do nosso Sistema Solar?", options: ["Júpiter", "Marte", "Terra"], correct: 0, explanation: "Júpiter é o maior planeta do nosso sistema solar." },
-            { cat: "🌍 Cultura Geral", q: "Em que continente fica localizado Moçambique?", options: ["África", "Europa", "Ásia"], correct: 0, explanation: "Moçambique localiza-se na costa oriental da África Austral." },
-            { cat: "🌍 Cultura Geral", q: "Quem pintou a famosa obra 'Mona Lisa'?", options: ["Leonardo da Vinci", "Pablo Picasso", "Vincent van Gogh"], correct: 0, explanation: "Leonardo da Vinci pintou a Mona Lisa durante o Renascimento." },
-            { cat: "🌍 Cultura Geral", q: "Qual é o oceano que banha a costa leste de Moçambique?", options: ["Oceano Índico", "Oceano Pacífico", "Oceano Atlântico"], correct: 0, explanation: "O Oceano Índico banha toda a costa oriental moçambicana." },
-            { cat: "🌍 Cultura Geral", q: "Qual é a capital de Moçambique?", options: ["Maputo", "Beira", "Nampula"], correct: 0, explanation: "Maputo é a capital e maior cidade de Moçambique." }
-        ];
+        // Função para embaralhar perguntas aleatoriamente sem repetir
+        function shuffleQuestions() {
+            let arr = [...masterQuestions];
+            for (let i = arr.length - 1; i > 0; i--) {
+                let j = Math.floor(Math.random() * (i + 1));
+                [arr[i], arr[j]] = [arr[j], arr[i]];
+            }
+            return arr;
+        }
 
-        // Controlo de Teclado (PC)
         window.addEventListener("keydown", (e) => {
             if (e.code === "Space" || e.code === "ArrowUp") {
                 e.preventDefault();
-                if (!gameRunning && startScreen.style.display !== "none") {
-                    startGame();
-                } else {
-                    jump();
-                }
+                handleAction();
+            } else if (e.code === "KeyP") {
+                togglePause();
             }
         });
 
-        // Controlo Táctil com o Botão Gigante do Telemóvel
-        jumpBtnMobile.addEventListener("touchstart", (e) => {
+        mobileTouchBtn.addEventListener("touchstart", (e) => {
             e.preventDefault();
-            handleJumpAction();
+            handleAction();
+        }, { passive: false });
+
+        mobileTouchBtn.addEventListener("click", (e) => {
+            e.preventDefault();
+            handleAction();
         });
 
-        jumpBtnMobile.addEventListener("click", (e) => {
+        canvasArea.addEventListener("touchstart", (e) => {
             e.preventDefault();
-            handleJumpAction();
+            handleAction();
+        }, { passive: false });
+
+        canvasArea.addEventListener("click", (e) => {
+            e.preventDefault();
+            handleAction();
         });
 
-        function handleJumpAction() {
+        function handleAction() {
             initAudio();
             if (!gameRunning && startScreen.style.display !== "none") {
                 startGame();
-            } else {
+            } else if (!gameRunning && gameoverScreen.style.display !== "none") {
+                startGame();
+            } else if (!gamePaused) {
                 jump();
+            }
+        }
+
+        function togglePause() {
+            if (!gameRunning) return;
+            gamePaused = !gamePaused;
+            if (gamePaused) {
+                pauseBtn.innerText = "▶️";
+                stopRunningSound();
+            } else {
+                pauseBtn.innerText = "⏸️";
+                startRunningSound();
+                loop();
             }
         }
 
@@ -529,17 +561,19 @@
             explanationModal.style.display = "none";
             score = 0;
             lives = 3;
-            speed = 6;
+            speed = 5.5;
             obstacles = [];
             nextQuizScore = 100;
             nextLifeMilestone = 500;
-            usedQuestions = [];
-            player.y = 175;
+            activeQuestions = shuffleQuestions();
+            questionIndex = 0;
+            player.y = 200;
             player.dy = 0;
             player.grounded = true;
             updateLivesUI();
             gameRunning = true;
             gamePaused = false;
+            pauseBtn.innerText = "⏸️";
             startRunningSound();
             loop();
         }
@@ -555,9 +589,9 @@
             const label = types[Math.floor(Math.random() * types.length)];
             obstacles.push({
                 x: canvas.width,
-                y: 200,
-                width: 30,
-                height: 35,
+                y: 220,
+                width: 28,
+                height: 32,
                 label: label
             });
         }
@@ -571,40 +605,61 @@
 
         function triggerQuiz() {
             gamePaused = true;
-            if (usedQuestions.length >= masterQuestions.length) usedQuestions = [];
+            stopRunningSound();
 
-            let available = masterQuestions.filter((_, idx) => !usedQuestions.includes(idx));
-            let randomIndex = Math.floor(Math.random() * available.length);
-            let originalIndex = masterQuestions.indexOf(available[randomIndex]);
-            usedQuestions.push(originalIndex);
+            if (questionIndex >= activeQuestions.length) {
+                activeQuestions = shuffleQuestions(); // Reembaralha se o ciclo terminar
+                questionIndex = 0;
+            }
 
-            const q = masterQuestions[originalIndex];
-            quizCat.innerText = q.cat;
-            quizQuestion.innerText = q.q;
+            const qObj = activeQuestions[questionIndex];
+            questionIndex++;
+
+            quizCat.innerText = qObj.cat;
+            quizQuestion.innerText = qObj.q;
             quizOptions.innerHTML = "";
             
-            correctOptionText = q.options[q.correct];
-            lastExplanation = q.explanation;
+            lastExplanation = qObj.explanation;
 
-            q.options.forEach((opt, index) => {
+            // Criar cópia das opções e embaralhar aleatoriamente a ordem dos botões
+            let optionsList = qObj.options.map((opt, idx) => ({
+                text: opt,
+                isCorrect: (idx === qObj.correct)
+            }));
+
+            // Algoritmo para baralhar as opções no ecrã
+            for (let i = optionsList.length - 1; i > 0; i--) {
+                let j = Math.floor(Math.random() * (i + 1));
+                [optionsList[i], optionsList[j]] = [optionsList[j], optionsList[i]];
+            }
+
+            // Guardar o texto correto para exibir se errar
+            let correctObj = optionsList.find(o => o.isCorrect);
+            correctOptionText = correctObj.text;
+
+            // Gerar os botões dinamicamente
+            optionsList.forEach((optItem, index) => {
                 const btn = document.createElement("button");
                 btn.className = "option-btn";
-                btn.innerText = `${index + 1}. ${opt}`;
-                btn.onclick = () => checkAnswer(index, q.correct);
+                btn.innerText = `${index + 1}. ${optItem.text}`;
+                btn.onclick = () => checkAnswer(optItem.isCorrect);
                 quizOptions.appendChild(btn);
             });
 
             quizModal.style.display = "flex";
         }
 
-        function checkAnswer(selected, correct) {
+        function checkAnswer(isCorrect) {
             quizModal.style.display = "none";
-            if (selected === correct) {
+            if (isCorrect) {
                 playSound('correct');
                 score += 100;
+                scoreEl.innerText = score;
                 showBanner("✨ Resposta Certa! +100 pts", "correct");
                 nextQuizScore = score + 100;
                 gamePaused = false;
+                startRunningSound();
+                loop();
             } else {
                 playSound('wrong');
                 correctAnswerDisplay.innerText = `✅ Opção Correta: "${correctOptionText}"`;
@@ -615,7 +670,7 @@
 
         function closeExplanationAndGameOver() {
             explanationModal.style.display = "none";
-            gameOver("Errou a questão! Veja a resposta correta acima e tente novamente.");
+            gameOver("Errou a questão! Veja a resposta correta acima.");
         }
 
         function gameOver(msg) {
@@ -635,150 +690,140 @@
             ctx.save();
             ctx.translate(x, y);
 
-            // Cabeça
             ctx.fillStyle = "#e0ac69";
             ctx.beginPath();
-            ctx.arc(18, 10, 8, 0, Math.PI * 2);
+            ctx.arc(16, 9, 7, 0, Math.PI * 2);
             ctx.fill();
 
-            // Cabelo
             ctx.fillStyle = "#1e1b18";
             ctx.beginPath();
-            ctx.arc(18, 6, 8.5, Math.PI, Math.PI * 2);
+            ctx.arc(16, 5, 7.5, Math.PI, Math.PI * 2);
             ctx.fill();
 
-            // Tronco (T-shirt moderna)
             ctx.fillStyle = "#00f0ff";
-            ctx.fillRect(10, 18, 16, 22);
+            ctx.fillRect(9, 16, 15, 20);
 
-            // Pernas e Braços animados
             ctx.strokeStyle = "#1e293b";
-            ctx.lineWidth = 4;
+            ctx.lineWidth = 3.5;
             ctx.lineCap = "round";
 
-            let legCycle = grounded ? Math.sin(frame * 0.22) * 12 : 14;
+            let legCycle = grounded ? Math.sin(frame * 0.22) * 10 : 12;
             
             ctx.beginPath();
-            ctx.moveTo(13, 40);
-            ctx.lineTo(13 - legCycle, 55);
+            ctx.moveTo(11, 36);
+            ctx.lineTo(11 - legCycle, 48);
             ctx.stroke();
 
             ctx.beginPath();
-            ctx.moveTo(23, 40);
-            ctx.lineTo(23 + legCycle, 55);
+            ctx.moveTo(21, 36);
+            ctx.lineTo(21 + legCycle, 48);
             ctx.stroke();
 
             ctx.strokeStyle = "#e0ac69";
-            ctx.lineWidth = 3.5;
+            ctx.lineWidth = 3;
 
             ctx.beginPath();
-            ctx.moveTo(11, 22);
-            ctx.lineTo(11 + legCycle, 32);
+            ctx.moveTo(10, 18);
+            ctx.lineTo(10 + legCycle, 28);
             ctx.stroke();
 
             ctx.beginPath();
-            ctx.moveTo(25, 22);
-            ctx.lineTo(25 - legCycle, 32);
+            ctx.moveTo(22, 18);
+            ctx.lineTo(22 - legCycle, 28);
             ctx.stroke();
 
             ctx.restore();
         }
 
         function loop() {
-            if (!gameRunning) return;
+            if (!gameRunning || gamePaused) return;
 
-            if (!gamePaused) {
-                ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-                // Chão
-                ctx.fillStyle = "#0b0f19";
-                ctx.fillRect(0, 235, canvas.width, 45);
-                ctx.strokeStyle = "#00f0ff";
-                ctx.lineWidth = 2;
+            ctx.fillStyle = "#0b0f19";
+            ctx.fillRect(0, 250, canvas.width, 50);
+            ctx.strokeStyle = "#00f0ff";
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            ctx.moveTo(0, 250);
+            ctx.lineTo(canvas.width, 250);
+            ctx.stroke();
+
+            player.dy += player.gravity;
+            player.y += player.dy;
+
+            if (player.y > 200) {
+                player.y = 200;
+                player.dy = 0;
+                player.grounded = true;
+            }
+
+            player.animFrame++;
+            drawMan(player.x, player.y, player.grounded, player.animFrame);
+
+            if (frameCount % 110 === 0) {
+                spawnObstacle();
+            }
+
+            for (let i = obstacles.length - 1; i >= 0; i--) {
+                let obs = obstacles[i];
+                obs.x -= speed;
+
+                ctx.fillStyle = "#ef4444";
                 ctx.beginPath();
-                ctx.moveTo(0, 235);
-                ctx.lineTo(canvas.width, 235);
+                ctx.roundRect(obs.x, obs.y, obs.width, obs.height, 5);
+                ctx.fill();
+                ctx.strokeStyle = "#fca5a5";
+                ctx.lineWidth = 1.5;
                 ctx.stroke();
 
-                player.dy += player.gravity;
-                player.y += player.dy;
+                ctx.fillStyle = "#ffffff";
+                ctx.font = "bold 7px sans-serif";
+                ctx.fillText(obs.label, obs.x + 2, obs.y + 20);
 
-                if (player.y > 175) {
-                    player.y = 175;
-                    player.dy = 0;
-                    player.grounded = true;
-                }
+                if (
+                    player.x < obs.x + obs.width &&
+                    player.x + player.width > obs.x &&
+                    player.y < obs.y + obs.height &&
+                    player.y + player.height > obs.y
+                ) {
+                    playSound('hit');
+                    obstacles.splice(i, 1);
+                    lives--;
+                    updateLivesUI();
 
-                player.animFrame++;
-                drawMan(player.x, player.y, player.grounded, player.animFrame);
-
-                if (frameCount % 100 === 0) {
-                    spawnObstacle();
-                }
-
-                // Gestão de Obstáculos
-                for (let i = obstacles.length - 1; i >= 0; i--) {
-                    let obs = obstacles[i];
-                    obs.x -= speed;
-
-                    ctx.fillStyle = "#ef4444";
-                    ctx.beginPath();
-                    ctx.roundRect(obs.x, obs.y, obs.width, obs.height, 6);
-                    ctx.fill();
-                    ctx.strokeStyle = "#fca5a5";
-                    ctx.lineWidth = 2;
-                    ctx.stroke();
-
-                    ctx.fillStyle = "#ffffff";
-                    ctx.font = "bold 8px sans-serif";
-                    ctx.fillText(obs.label, obs.x + 3, obs.y + 22);
-
-                    // Colisão com obstáculo
-                    if (
-                        player.x < obs.x + obs.width &&
-                        player.x + player.width > obs.x &&
-                        player.y < obs.y + obs.height &&
-                        player.y + player.height > obs.y
-                    ) {
-                        playSound('hit');
-                        obstacles.splice(i, 1);
-                        lives--;
-                        updateLivesUI();
-
-                        if (lives <= 0) {
-                            gameOver("Esgotou todas as vidas ao colidir com os obstáculos!");
-                            return;
-                        } else {
-                            showBanner("💥 Colisão! Perdeu 1 vida.", "wrong");
-                        }
-                    }
-
-                    if (obs.x + obs.width < 0) {
-                        obstacles.splice(i, 1);
-                        score += 10;
-                        scoreEl.innerText = score;
-
-                        // Ganhar vida a cada 500 pontos (teto máximo de 3)
-                        if (score >= nextLifeMilestone) {
-                            if (lives < 3) {
-                                lives++;
-                                updateLivesUI();
-                                playSound('heart');
-                                showBanner("💖 Marco de 500 pontos! +1 Vida ganha!", "correct");
-                            }
-                            nextLifeMilestone += 500;
-                        }
-
-                        // Pergunta a cada 100 pontos
-                        if (score >= nextQuizScore) {
-                            triggerQuiz();
-                        }
+                    if (lives <= 0) {
+                        gameOver("Esgotou todas as vidas ao colidir com os obstáculos!");
+                        return;
+                    } else {
+                        showBanner("💥 Colisão! Perdeu 1 vida.", "wrong");
                     }
                 }
 
-                speed = 6 + Math.floor(score / 300);
-                frameCount++;
+                if (obs.x + obs.width < 0) {
+                    obstacles.splice(i, 1);
+                    score += 10;
+                    scoreEl.innerText = score;
+
+                    if (score >= nextLifeMilestone) {
+                        if (lives < 3) {
+                            lives++;
+                            updateLivesUI();
+                            playSound('heart');
+                            showBanner("💖 Marco de 500 pontos! +1 Vida ganha!", "correct");
+                        }
+                        nextLifeMilestone += 500;
+                    }
+
+                    if (score >= nextQuizScore) {
+                        triggerQuiz();
+                        return;
+                    }
+                }
             }
+
+            speed = 5.5 + Math.floor(score / 350);
+            frameCount++;
 
             requestAnimationFrame(loop);
         }
